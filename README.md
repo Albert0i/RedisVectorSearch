@@ -5,6 +5,7 @@
 
 
 #### I. [Vectors](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/) Basics
+
 > VECTOR - Allows vector queries against the value in this attribute. This requires [query dialect 2](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/dialects/#dialect-2) or above (introduced in [RediSearch v2.4](https://github.com/RediSearch/RediSearch/releases/tag/v2.4.3)). For more information, see [Vector Fields](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/).
 
 ```
@@ -107,11 +108,13 @@ FT.SEARCH documents "*=>[KNN 10 @doc_embedding $BLOB]" PARAMS 2 BLOB "\x12\xa9\x
 ```
 
 
-#### II. [Storing vectors](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/#store-and-update-vectors)
+#### II. Loading data
+
 ```
 ```
 
-#### III. [Create a vector index](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/#create-a-vector-index)
+
+#### III. Creating index 
 
 ```
 FT.CREATE idx:quotes ON JSON PREFIX 1 quote:
@@ -127,9 +130,12 @@ FT.CREATE idx:quotes ON JSON PREFIX 1 quote:
           BLOCK_SIZE  111
 ```
 
+
 #### IV. [Search with vectors](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/#search-with-vectors)
+
 ```
 ```
+
 
 #### V. Bibliography
 1. [Redis as a Vector Database Explained](https://youtu.be/xhLXZ0Hqudk)
