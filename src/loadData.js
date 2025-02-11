@@ -1,17 +1,13 @@
 import { redisClient, disconnect } from "./redis/redisClient.js"
 import { generateSentenceEmbeddings } from "./text-vector-gen.js"
-
 import { quotes } from './quotes.js'
 
 async function main() {
-  let i, embeddings
-
   console.log('number of quotes is', quotes.length)
   process.stdout.write('Loading')
-  for (i = 0; i < quotes.length; i++) { 
+  for (let i = 0; i < quotes.length; i++) { 
     process.stdout.write(".");
-    embeddings = await generateSentenceEmbeddings(quotes[i].quote);
-    quotes[i].embeddings = embeddings
+    quotes[i].embeddings = await generateSentenceEmbeddings(quotes[i].quote);
     await redisClient.call("JSON.SET", `quote:${i+1}`, "$", JSON.stringify(quotes[i]));
   }
   console.log('Done')
