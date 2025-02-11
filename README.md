@@ -125,6 +125,7 @@ async function main() {
 
 main()
 ```
+![alt loadData](img/loadData.JPG)
 
 
 #### III. Creating index 
@@ -180,6 +181,7 @@ async function main() {
 
 main()
 ```
+![alt knnQuery](img/knnQuery.JPG)
 
 
 #### V. Bibliography
