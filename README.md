@@ -26,6 +26,8 @@ FT.CREATE <index_name>
 | index_attribute_name | Vector field attribute name.. |
 | index_attribute_value | Vector field attribute value. |
 
+**FLAT INDEX**
+
 > Choose the FLAT index when you have small datasets (< 1M vectors) or when perfect search accuracy is more important than search latency.
 
 | Attribute | Description |
@@ -46,6 +48,8 @@ FT.CREATE documents
 
 > In the example above, an index named documents is created over hashes with the key prefix docs: and a FLAT vector field named doc_embedding with three index attributes: TYPE, DIM, and DISTANCE_METRIC.
 
+**Distance metrics**
+
 > Redis supports three popular distance metrics to measure the degree of similarity between two vectors.
 
 ![alt Distance metric](img/DistanceMetric.JPG)
@@ -55,6 +59,8 @@ FT.CREATE documents
 - Cosine distance is a measure of the angle between two non-zero vectors in a multi-dimensional space. It is derived from the cosine similarity, which measures the cosine of the angle between two vectors. While cosine similarity ranges from -1 to 1, cosine distance is a measure that ranges from 0 to 1 and represents the angular distance between the vectors.
 
 > The above metrics calculate distance between two vectors, where the smaller the value is, the closer the two vectors are in the vector space.
+
+**JSON**
 
 > To store vectors in Redis as JSON, you store the vector as a JSON array of floats. Note that this differs from vector storage in Redis hashes, which are instead stored as raw bytes.
 
@@ -66,6 +72,8 @@ JSON.SET docs:01 $ '{"doc_embedding":[0.34,0.63,-0.54,-0.69,0.98,0.61], "categor
 > You can run vector search queries with the [FT.SEARCH](https://redis.io/docs/latest//commands/ft.search/) or [FT.AGGREGATE](https://redis.io/docs/latest//commands/ft.aggregate/) commands.
 
 > To issue a vector search query with FT.SEARCH, you must set the DIALECT option to >= 2. See the [dialects documentation](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/dialects/) for more information.
+
+**KNN vector search**
 
 > KNN vector search finds the top k nearest neighbors to a query vector. It has the following syntax:
 ```
