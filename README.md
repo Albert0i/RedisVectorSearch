@@ -19,6 +19,10 @@ FT.CREATE <index_name>
 
 | Parameter | Description |
 | ----------- | ----------- |
+| index_name | Name of the index. | 
+| storage_type | Storage option (HASH or JSON). | 
+| prefix (optional) | Key prefix used to select which keys should be indexed. Defaults to all keys if omitted. | 
+| field_name | Name of the vector field. | 
 | algorithm | Vector index algorithm (FLAT or HNSW). |
 | index_attribute_count | Number of vector field attributes. |
 | index_attribute_name | Vector field attribute name.. |
