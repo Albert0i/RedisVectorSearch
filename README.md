@@ -3,20 +3,11 @@
 
 #### Prologue
 
-
-#### I. Subtext
-
 [Vectors](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/)
 
 
-#### II. [Storing vectors](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/#store-and-update-vectors)
-```
-```
-
-#### III. [Create a vector index](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/#create-a-vector-index)
-
+#### I. Subtext
 > VECTOR - Allows vector queries against the value in this attribute. This requires [query dialect 2](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/dialects/#dialect-2) or above (introduced in [RediSearch v2.4](https://github.com/RediSearch/RediSearch/releases/tag/v2.4.3)). For more information, see [Vector Fields](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/).
-
 
 ```
 FT.CREATE <index_name>
@@ -50,6 +41,7 @@ FT.CREATE documents
     DIM 1536
     DISTANCE_METRIC COSINE
 ```
+
 > In the example above, an index named documents is created over hashes with the key prefix docs: and a FLAT vector field named doc_embedding with three index attributes: TYPE, DIM, and DISTANCE_METRIC.
 
 > Redis supports three popular distance metrics to measure the degree of similarity between two vectors.
@@ -95,7 +87,6 @@ FT.SEARCH <index_name>
 | vector_query_param_name | The name of the vector query parameter. |
 | vector_query_param_value | The value of the vector query parameter. |
 
-
 ```
 FT.SEARCH documents "*=>[KNN 10 @doc_embedding $BLOB]" PARAMS 2 BLOB "\x12\xa9\xf5\x6c" DIALECT 4
 ```
@@ -105,6 +96,12 @@ FT.SEARCH documents "*=>[KNN 10 @doc_embedding $BLOB]" PARAMS 2 BLOB "\x12\xa9\x
 [KNN <top_k> @<vector_field> $<vector_blob_param>]=>{$yield_distance_as: <distance_field>}
 ```
 
+
+#### II. [Storing vectors](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/#store-and-update-vectors)
+```
+```
+
+#### III. [Create a vector index](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/#create-a-vector-index)
 
 ```
 FT.CREATE idx:quotes ON JSON PREFIX 1 quote:
