@@ -3,10 +3,8 @@
 
 #### Prologue
 
-[Vectors](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/)
 
-
-#### I. Subtext
+#### I. [Vectors](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/) Basics
 > VECTOR - Allows vector queries against the value in this attribute. This requires [query dialect 2](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/dialects/#dialect-2) or above (introduced in [RediSearch v2.4](https://github.com/RediSearch/RediSearch/releases/tag/v2.4.3)). For more information, see [Vector Fields](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/).
 
 ```
