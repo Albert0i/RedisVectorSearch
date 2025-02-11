@@ -1,4 +1,4 @@
-### Redis Vector Search 
+### Redis [Vector Search](https://redis.io/docs/latest/develop/interact/search-and-query/query/vector-search/)
 
 
 #### Prologue
