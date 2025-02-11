@@ -53,22 +53,3 @@ main()
    FT.SEARCH
    https://redis.io/docs/latest/commands/ft.search/
 */
-  //https://redis.io/docs/interact/search-and-query/query/
-  //   results = await redisClient.ft.search(PRODUCTS_INDEX_KEY, searchQuery, {
-  //     PARAMS: {
-  //       searchBlob: float32Buffer(searchTxtVectorArr),
-  //     },
-  //     RETURN: ['score', 'author', 'quote', 'source'],
-  //     SORTBY: {
-  //       BY: 'score',
-  //       // DIRECTION: "DESC"
-  //     },
-  //     DIALECT: 2,
-  //   });
-  // FT.SEARCH index "(*)=>[KNN num_neighbours @field $vector]" PARAMS 2 vector "binary_data" DIALECT 2
-  // FT.SEARCH idx:bikes_vss "(*)=>[KNN 3 @vector $query_vector]" PARAMS 2 "query_vector" "Z\xf8\x15:\xf23\xa1\xbfZ\x1dI>\r\xca9..." SORTBY "__vector_score" ASC RETURN 2 "__vector_score" "description" DIALECT 2  
-  // FT.SEARCH idx:quotes "(*)=>[KNN 3 @field $embeddings]" PARAMS 2 embeddings "insane" DIALECT 2
-  // FT.SEARCH idx:quotes "(*)=>[KNN 3 @field $embeddings]" PARAMS 2 embeddings "insane" DIALECT 2
-  // FT.SEARCH idx:quotes "(*)=>[KNN 3 @field $embeddings]" PARAMS 2 embeddings "insane" DIALECT 2
-  // results = await redisClient.call('FT.SEARCH', 'idx:quotes', '"(*)=>[KNN 3 @field $embeddings]"', 'PARAMS', '2', 'embeddings', float32Buffer(searchTxtVectorArr), 'DIALECT', '2')
-  // //results = await redisClient.call('FT._LIST')
