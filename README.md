@@ -131,7 +131,7 @@ FT.CREATE idx:quotes ON JSON PREFIX 1 quote:
 ```
 
 
-#### IV. [Search with vectors](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/#search-with-vectors)
+#### IV. Searching Vector
 
 ```
 ```
