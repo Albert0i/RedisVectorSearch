@@ -109,8 +109,21 @@ FT.SEARCH documents "*=>[KNN 10 @doc_embedding $BLOB]" PARAMS 2 BLOB "\x12\xa9\x
 
 
 #### II. Loading data
-
+loadData.js
 ```
+async function main() {
+  console.log('number of quotes is', quotes.length)
+  process.stdout.write('Loading')
+  for (let i = 0; i < quotes.length; i++) { 
+    process.stdout.write(".");
+    quotes[i].embeddings = await generateSentenceEmbeddings(quotes[i].quote);
+    await redisClient.call("JSON.SET", `quote:${i+1}`, "$", JSON.stringify(quotes[i]));
+  }
+  console.log('Done')
+  await disconnect()
+}
+
+main()
 ```
 
 
@@ -132,8 +145,40 @@ FT.CREATE idx:quotes ON JSON PREFIX 1 quote:
 
 
 #### IV. Searching Vector
-
+knnQuery.js
 ```
+const queryQuoteEmbeddingsByKNN = async (
+      _searchTxt,
+      _resultCount,
+    ) => {
+    console.log(`queryQuotesEmbeddingsByKNN started`);
+    let results = {};
+    if (_searchTxt) {
+      _resultCount = _resultCount ?? 3;
+      const searchTxtVectorArr = await generateSentenceEmbeddings(_searchTxt);
+      const searchQuery = `*=>[KNN ${_resultCount} @embeddings $searchBlob AS score]`;
+  
+      results = await redisClient.call('FT.SEARCH', 
+                                       'idx:quotes', 
+                                       searchQuery, 
+                                       'RETURN', '3', 'score', 'quote', 'source',                                       
+                                       'SORTBY', 'score', 
+                                       'PARAMS', '2', 'searchBlob', 
+                                      float32Buffer(searchTxtVectorArr), 'DIALECT', '2');
+    } else {
+      throw 'Search text cannot be empty';
+    }
+  
+    return results;
+  };
+
+async function main() {
+  const results = await queryQuoteEmbeddingsByKNN('dream love death')
+  console.log(results)
+  await disconnect()
+}
+
+main()
 ```
 
 
