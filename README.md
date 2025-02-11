@@ -108,7 +108,7 @@ FT.SEARCH documents "*=>[KNN 10 @doc_embedding $BLOB]" PARAMS 2 BLOB "\x12\xa9\x
 ```
 
 
-#### II. Loading data
+#### II. Loading the data
 loadData.js
 ```
 async function main() {
@@ -128,7 +128,7 @@ main()
 ![alt loadData](img/loadData.JPG)
 
 
-#### III. Creating index 
+#### III. Creating Vector index 
 
 ```
 FT.CREATE idx:quotes ON JSON PREFIX 1 quote:
@@ -145,7 +145,7 @@ FT.CREATE idx:quotes ON JSON PREFIX 1 quote:
 ```
 
 
-#### IV. Searching Vector
+#### IV. Searching Through Vectors
 knnQuery.js
 ```
 const queryQuoteEmbeddingsByKNN = async (
