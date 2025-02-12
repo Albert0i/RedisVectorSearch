@@ -127,7 +127,6 @@ FT.SEARCH documents "*=>[KNN 10 @doc_embedding $BLOB]" PARAMS 2 BLOB "\x12\xa9\x
 ```
 [KNN <top_k> @<vector_field> $<vector_blob_param>]=>{$yield_distance_as: <distance_field>}
 ```
-> It is vital that you use the same embedding model to embed your queries as you did your documents. Using a different model will result in poor semantic search results or error.
 
 
 #### II. Loading the data
@@ -180,7 +179,7 @@ FT.CREATE idx:bikes_vss ON JSON
 
 > Here is a breakdown of the VECTOR field definition:
 
-$.description_embeddings AS vector: The vector field's JSON path and its field alias vector.
+- $.description_embeddings AS vector: The vector field's JSON path and its field alias vector.
 
 - FLAT: Specifies the indexing method, which is either a flat index or a hierarchical navigable small world graph ([HNSW](https://arxiv.org/ftp/arxiv/papers/1603/1603.09320.pdf)).
 
@@ -189,7 +188,6 @@ $.description_embeddings AS vector: The vector field's JSON path and its field a
 - DIM 768: The length or dimension of the embeddings, determined by the chosen embedding model.
 
 - DISTANCE_METRIC COSINE: The chosen distance function: [cosine distance](https://en.wikipedia.org/wiki/Cosine_similarity).
-
 
 > You can find further details about all these options in the [vector reference documentation](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/).
 
@@ -349,7 +347,10 @@ main()
 > By default, [FT.SEARCH](https://redis.io/docs/latest//commands/ft.search/) returns only the first ten results. The [range query article](https://redis.io/docs/latest/develop/interact/search-and-query/query/range/) explains to you how to scroll through the result set.
 
 
-#### V. Bibliography
+#### V. Summary 
+
+
+#### VI. Bibliography
 1. [Redis as a Vector Database Explained](https://youtu.be/xhLXZ0Hqudk)
 2. [Redis as a vector database](https://university.redis.io/course/7e2qbbeg963twz)
 3. [Introduction to vector search](https://university.redis.io/course/yz1lretjfpdlew)
@@ -365,4 +366,4 @@ main()
 #### Epilogue 
 
 
-### EOF (2025/02/21)
+### EOF (2025/02/15)
