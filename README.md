@@ -296,6 +296,8 @@ main()
 
 ![alt radiusQuery](img/radiusQuery.JPG)
 
+> By default, [FT.SEARCH](https://redis.io/docs/latest//commands/ft.search/) returns only the first ten results. The [range query article](https://redis.io/docs/latest/develop/interact/search-and-query/query/range/) explains to you how to scroll through the result set.
+
 
 #### V. Bibliography
 1. [Redis as a Vector Database Explained](https://youtu.be/xhLXZ0Hqudk)
