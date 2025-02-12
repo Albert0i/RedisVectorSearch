@@ -32,10 +32,11 @@ const queryQuoteEmbeddingsByKNN = async (
       results = await redisClient.call('FT.SEARCH', 
                                        'idx:quotes', 
                                        searchQuery, 
-                                       'RETURN', '4', 'score', 'author', 'quote', 'source', 
+                                       'RETURN', 4, 'score', 'author', 'quote', 'source', 
                                        'SORTBY', 'score', 
-                                       'PARAMS', '2', 'searchBlob', 
-                                       float32Buffer(searchTxtVectorArr), 'DIALECT', '2');
+                                       'PARAMS', 2, 'searchBlob', 
+                                                    float32Buffer(searchTxtVectorArr), 
+                                       'DIALECT', 2);
     } else {
       throw 'Search text cannot be empty';
     }
