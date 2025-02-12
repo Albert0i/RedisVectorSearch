@@ -131,7 +131,7 @@ FT.SEARCH documents "*=>[KNN 10 @doc_embedding $BLOB]" PARAMS 2 BLOB "\x12\xa9\x
 
 #### II. Loading the data
 
-Our quote database consists of more than two hundreds famous quotes with fhe form of:
+Our quote database consists of over two hundreds famous quotes with fhe form of:
 
 ```
 {
