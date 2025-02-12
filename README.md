@@ -366,6 +366,8 @@ main()
 
 > Transformers.js is designed to be functionally equivalent to Hugging Face's [transformers](https://github.com/huggingface/transformers) python library, meaning you can run the same pretrained models using a very similar API. 
 
+[In-Browser Semantic Search with Transformers.js and PGlite + pgvector](https://github.com/huggingface/transformers.js-examples/tree/main/pglite-semantic-search)
+
 ![alt transformer.js](img/transformer.js.JPG)
 
 
