@@ -7,6 +7,7 @@ const float32Buffer = (arr) => {
     return float32Buffer;
   };
 
+// FT.SEARCH index "@field:[VECTOR_RANGE radius $vector]" PARAMS 2 vector "binary_data" DIALECT 2
 // FT.SEARCH index "@field:[VECTOR_RANGE radius $vector]=>{$YIELD_DISTANCE_AS: dist_field}" PARAMS 2 vector "binary_data" SORTBY dist_field DIALECT 2
 // FT.SEARCH idx:bikes_vss "@vector:[VECTOR_RANGE 0.5 $query_vector]=>{$YIELD_DISTANCE_AS: vector_dist}" PARAMS 2 "query_vector" "Z\xf8\x15:\xf23\xa1\xbfZ\x1dI>\r\xca9..." SORTBY vector_dist ASC RETURN 2 vector_dist description DIALECT 2
 const queryQuoteEmbeddingsByRange = async (
@@ -18,7 +19,7 @@ const queryQuoteEmbeddingsByRange = async (
     if (_searchTxt) {
       _radius = _radius ?? 0.5;
       const searchTxtVectorArr = await generateSentenceEmbeddings(_searchTxt);      
-      const searchQuery = `@embeddings:[VECTOR_RANGE ${_radius} $searchBlob]=>{$YIELD_DISTANCE_AS: vector_dist}`;
+      const searchQuery = `@embeddings:[VECTOR_RANGE ${_radius} $searchBlob]=>{$YIELD_DISTANCE_AS: vector_dist}`;      
       results = await redisClient.call('FT.SEARCH', 
                                        'idx:quotes', 
                                        searchQuery, 
