@@ -211,7 +211,8 @@ const queryQuoteEmbeddingsByKNN = async (
                                        'RETURN', '4', 'score', 'author', 'quote', 'source', 
                                        'SORTBY', 'score', 
                                        'PARAMS', '2', 'searchBlob', 
-                                       float32Buffer(searchTxtVectorArr), 'DIALECT', '2');
+                                                      float32Buffer(searchTxtVectorArr), 
+                                       'DIALECT', '2');
     } else {
       throw 'Search text cannot be empty';
     }
@@ -257,7 +258,10 @@ FT.SEARCH index "@field:[VECTOR_RANGE radius $vector]=>{$YIELD_DISTANCE_AS: dist
 
 > The example below shows a radius query that returns the quote and the distance within a radius of 0.5. The result is sorted by the distance.
 
+radiusQuery.js
+```
 
+```
 
 
 #### V. Bibliography

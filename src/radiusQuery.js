@@ -17,6 +17,7 @@ const float32Buffer = (arr) => {
     PARAMS 2 searchBlob "6\xf7\..."
     DIALECT 2
 */
+// FT.SEARCH index "@field:[VECTOR_RANGE radius $vector]=>{$YIELD_DISTANCE_AS: dist_field}" PARAMS 2 vector "binary_data" SORTBY dist_field DIALECT 2
 const queryQuoteEmbeddingsByKNN = async (
       _searchTxt,
       _resultCount,
@@ -26,13 +27,13 @@ const queryQuoteEmbeddingsByKNN = async (
     if (_searchTxt) {
       _resultCount = _resultCount ?? 5;
       const searchTxtVectorArr = await generateSentenceEmbeddings(_searchTxt);
-      const searchQuery = `(*)=>[KNN ${_resultCount} @embeddings $searchBlob AS score]`;
-  
+      //const searchQuery = `(*)=>[KNN ${_resultCount} @embeddings $searchBlob AS score]`;
+      const searchQuery = `@embeddings:[VECTOR_RANGE 0.5 $searchBlob]=>{$YIELD_DISTANCE_AS: vector_dist}`;
       results = await redisClient.call('FT.SEARCH', 
                                        'idx:quotes', 
                                        searchQuery, 
-                                       'RETURN', '4', 'score', 'author', 'quote', 'source', 
-                                       'SORTBY', 'score', 
+                                       'RETURN', '4', 'vector_dist', 'author', 'quote', 'source', 
+                                       'SORTBY', 'vector_dist', 
                                        'PARAMS', '2', 'searchBlob', 
                                                       float32Buffer(searchTxtVectorArr), 
                                        'DIALECT', '2');
