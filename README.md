@@ -190,6 +190,8 @@ FT.SEARCH index "(*)=>[KNN num_neighbours @field $vector]" PARAMS 2 vector "bina
 
 5. Dialect: The vector search feature has been available since version two of the query dialect.
 
+> The following example shows you how to query for five quotes based on their quote embeddings, and by using the field embeddings vector. The result is returned in ascending order based on the distance. 
+
 knnQuery.js
 ```
 const queryQuoteEmbeddingsByKNN = async (
@@ -199,17 +201,17 @@ const queryQuoteEmbeddingsByKNN = async (
     console.log(`queryQuotesEmbeddingsByKNN started`);
     let results = {};
     if (_searchTxt) {
-      _resultCount = _resultCount ?? 3;
+      _resultCount = _resultCount ?? 5;
       const searchTxtVectorArr = await generateSentenceEmbeddings(_searchTxt);
-      const searchQuery = `*=>[KNN ${_resultCount} @embeddings $searchBlob AS score]`;
+      const searchQuery = `(*)=>[KNN ${_resultCount} @embeddings $searchBlob AS score]`;
   
       results = await redisClient.call('FT.SEARCH', 
                                        'idx:quotes', 
                                        searchQuery, 
-                                       'RETURN', '3', 'score', 'quote', 'source',                                       
+                                       'RETURN', '4', 'score', 'author', 'quote', 'source', 
                                        'SORTBY', 'score', 
                                        'PARAMS', '2', 'searchBlob', 
-                                      float32Buffer(searchTxtVectorArr), 'DIALECT', '2');
+                                       float32Buffer(searchTxtVectorArr), 'DIALECT', '2');
     } else {
       throw 'Search text cannot be empty';
     }
