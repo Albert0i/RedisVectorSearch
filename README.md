@@ -4,7 +4,9 @@
 #### Prologue
 
 [Workshop: Searching document data with Redis, JSON, and vector-similarity](https://youtu.be/e4A_k-hFIa4)
+
 Simon Prickett & Brian Sam-Bodden
+
 01:13:26 Introducing Vector Similarity Search
 01:20:03 What are Vectors?
 01:23:57 Vector Embeddings
@@ -166,16 +168,25 @@ FT.CREATE idx:quotes ON JSON PREFIX 1 quote:
 
 #### IV. Searching Through Vectors
 
+> A vector search query on a vector field allows you to find all vectors in a vector space that are close to a given vector. You can query for the k-nearest neighbors or vectors within a given radius.
+
+**K-neareast neighbours (KNN)**
+
+> The Redis command [FT.SEARCH](https://redis.io/docs/latest//commands/ft.search) takes the index name, the query string, and additional query parameters as arguments. You need to pass the number of nearest neighbors, the vector field name, and the vector's binary representation in the following way:
+
 ```
 FT.SEARCH index "(*)=>[KNN num_neighbours @field $vector]" PARAMS 2 vector "binary_data" DIALECT 2
 ```
-1. Pre-filter: The first expression within the round brackets is a filter. It allows you to decide which vectors should be taken into account before the vector search is performed. The expression (*) means that all vectors are considered.
 
-2. Next step: The => arrow indicates that the pre-filtering happens before the vector search.
+> Here is a more detailed explanation of this query:
 
-3. KNN query: The expression [KNN num_neighbours @field $vector] is a parameterized query expression. A parameter name is indicated by the $ prefix within the query string.
+1. **Pre-filter**: The first expression within the round brackets is a filter. It allows you to decide which vectors should be taken into account before the vector search is performed. The expression (*) means that all vectors are considered.
 
-4. Vector binary data: You need to use the PARAMS argument to substitute $vector with the binary representation of the vector. The value 2 indicates that PARAMS is followed by two arguments, the parameter name vector and the parameter value.
+2. **Next step**: The => arrow indicates that the pre-filtering happens before the vector search.
+
+3. **KNN query**: The expression [KNN num_neighbours @field $vector] is a parameterized query expression. A parameter name is indicated by the $ prefix within the query string.
+
+4. **Vector binary data**: You need to use the PARAMS argument to substitute $vector with the binary representation of the vector. The value 2 indicates that PARAMS is followed by two arguments, the parameter name vector and the parameter value.
 
 5. Dialect: The vector search feature has been available since version two of the query dialect.
 
@@ -233,4 +244,4 @@ main()
 #### Epilogue 
 
 
-### EOF (2025/02/11)
+### EOF (2025/02/21)
