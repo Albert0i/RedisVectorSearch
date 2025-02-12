@@ -3,6 +3,9 @@
 
 #### Prologue
 
+> VECTOR - Allows vector queries against the value in this attribute. This requires [query dialect 2](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/dialects/#dialect-2) or above (introduced in [RediSearch v2.4](https://github.com/RediSearch/RediSearch/releases/tag/v2.4.3)). For more information, see [Vector Fields](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/).
+
+
 [Workshop: Searching document data with Redis, JSON, and vector-similarity](https://youtu.be/e4A_k-hFIa4)
 
 Simon Prickett & Brian Sam-Bodden
@@ -27,7 +30,9 @@ plagiarize
 
 #### I. [Vectors](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/) Basics
 
-> VECTOR - Allows vector queries against the value in this attribute. This requires [query dialect 2](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/dialects/#dialect-2) or above (introduced in [RediSearch v2.4](https://github.com/RediSearch/RediSearch/releases/tag/v2.4.3)). For more information, see [Vector Fields](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/).
+Redis includes a [high-performance vector database](https://redis.io/blog/benchmarking-results-for-vector-databases/) that lets you perform semantic searches over vector embeddings. You can augment these searches with filtering over text, numerical, geospatial, and tag metadata.
+
+**Create a vector index**
 
 ```
 FT.CREATE <index_name>
@@ -69,6 +74,45 @@ FT.CREATE documents
 ```
 
 > In the example above, an index named documents is created over hashes with the key prefix docs: and a FLAT vector field named doc_embedding with three index attributes: TYPE, DIM, and DISTANCE_METRIC.
+
+**HNSW index**
+
+HNSW, or hierarchical navigable small world, is an approximate nearest neighbors algorithm that uses a multi-layered graph to make vector search more scalable.
+
+- The lowest layer contains all data points, and each higher layer contains a subset, forming a hierarchy.
+
+- At runtime, the search traverses the graph on each layer from top to bottom, finding the local minima before dropping to the subsequent layer.
+
+Choose the HNSW index type when you have larger datasets (> 1M documents) or when search performance and scalability are more important than perfect search accuracy.
+
+| Attribute | Description |
+| ----------- | ----------- |
+| TYPE | Vector type (BFLOAT16, FLOAT16, FLOAT32, FLOAT64). BFLOAT16 and FLOAT16 require v2.10 or later. |
+| DIM | The width, or number of dimensions, of the vector embeddings stored in this field. In other words, the number of floating point elements comprising the vector. DIM must be a positive integer. The vector used to query this field must have the exact dimensions as the field itself. |
+| DISTANCE_METRIC	 | Distance metric (L2, IP, COSINE). |
+
+*Optional attributes*
+
+| Attribute | Description |
+| ----------- | ----------- |
+| M | Max number of outgoing edges (connections) for each node in a graph layer. On layer zero, the max number of connections will be 2 * M. Higher values increase accuracy, but also increase memory usage and index build time. The default is 16. |
+| EF_CONSTRUCTION | Max number of connected neighbors to consider during graph building. Higher values increase accuracy, but also increase index build time. The default is 200. |
+| EF_RUNTIME | Max top candidates during KNN search. Higher values increase accuracy, but also increase search latency. The default is 10. |
+| EPSILON | Relative factor that sets the boundaries in which a range query may search for candidates. That is, vector candidates whose distance from the query vector is radius * (1 + EPSILON) are potentially scanned, allowing more extensive search and more accurate results, at the expense of run time. The default is 0.01. |
+
+```
+FT.CREATE documents
+  ON HASH
+  PREFIX 1 docs:
+  SCHEMA doc_embedding VECTOR HNSW 10
+    TYPE FLOAT64
+    DIM 1536
+    DISTANCE_METRIC COSINE
+    M 40
+    EF_CONSTRUCTION 250
+```
+
+In the example above, an index named documents is created over hashes with the key prefix docs: and an HNSW vector field named doc_embedding with five index attributes: TYPE, DIM, DISTANCE_METRIC, M, and EF_CONSTRUCTION.
 
 **Distance metrics**
 
