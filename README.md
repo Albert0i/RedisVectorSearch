@@ -1,32 +1,10 @@
-### Redis [Vector Search](https://redis.io/docs/latest/develop/interact/search-and-query/query/vector-search/)
+### <a title="Allows vector queries against the value in this attribute. This requires query dialect 2 or above (introduced in RediSearch v2.4." >Redis</a> [Vector Search](https://redis.io/docs/latest/develop/interact/search-and-query/query/vector-search/)
 
 
 #### Prologue
 
-> VECTOR - Allows vector queries against the value in this attribute. This requires [query dialect 2](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/dialects/#dialect-2) or above (introduced in [RediSearch v2.4](https://github.com/RediSearch/RediSearch/releases/tag/v2.4.3)). For more information, see [Vector Fields](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/).
-
-
 [Workshop: Searching document data with Redis, JSON, and vector-similarity](https://youtu.be/e4A_k-hFIa4)
 
-Simon Prickett & Brian Sam-Bodden
-
-01:13:26 Introducing Vector Similarity Search
-01:20:03 What are Vectors?
-01:23:57 Vector Embeddings
-01:28:09 Vector Databases
-01:29:18 Redis as a Vector Database
-01:32:04 Vector Similarity Demo with Python
-01:55:59 Semantic Queries
-01:57:21 Visualizing Embeddings and Constructing Queries
-02:03:51 Hybrid Queries
-02:05:56 Range Queries
-02:08:23 Running Queries and Visualizing Results
-02:10:12 Vector Similarity Recap
-
-[transformers.js-examples]{https://github.com/huggingface/transformers.js-examples}
-[In-Browser Semantic Search with Transformers.js and PGlite + pgvector](https://github.com/huggingface/transformers.js-examples/tree/main/pglite-semantic-search)
-
-plagiarize
 
 #### I. [Vectors](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/) Basics
 
