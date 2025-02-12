@@ -364,6 +364,10 @@ main()
 
 #### V. Summary 
 
+> Transformers.js is designed to be functionally equivalent to Hugging Face's [transformers](https://github.com/huggingface/transformers) python library, meaning you can run the same pretrained models using a very similar API. 
+
+![alt transformer.js](img/transformer.js.JPG)
+
 
 #### VI. Bibliography
 1. [Redis as a Vector Database Explained](https://youtu.be/xhLXZ0Hqudk)
