@@ -422,5 +422,13 @@ main()
 
 #### Epilogue 
 
+```
+{
+    "author": "George Orwell",
+    "quote": "War is peace. Freedom is slavery. Ignorance is strength.",
+    "source": "Nineteen Eighty-Four"
+}
+```
+
 
 ### EOF (2025/02/15)
