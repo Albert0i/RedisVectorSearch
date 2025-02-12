@@ -7,36 +7,26 @@ const float32Buffer = (arr) => {
     return float32Buffer;
   };
 
-//A KNN query will give us the top n documents that best match the query vector.
-/*  sample raw query
-
-    FT.SEARCH idx:products
-    "*=>[KNN 5 @productDescriptionEmbeddings $searchBlob AS score]"
-    RETURN 4 score brandName productDisplayName imageURL
-    SORTBY score
-    PARAMS 2 searchBlob "6\xf7\..."
-    DIALECT 2
-*/
 // FT.SEARCH index "@field:[VECTOR_RANGE radius $vector]=>{$YIELD_DISTANCE_AS: dist_field}" PARAMS 2 vector "binary_data" SORTBY dist_field DIALECT 2
-const queryQuoteEmbeddingsByKNN = async (
+// FT.SEARCH idx:bikes_vss "@vector:[VECTOR_RANGE 0.5 $query_vector]=>{$YIELD_DISTANCE_AS: vector_dist}" PARAMS 2 "query_vector" "Z\xf8\x15:\xf23\xa1\xbfZ\x1dI>\r\xca9..." SORTBY vector_dist ASC RETURN 2 vector_dist description DIALECT 2
+const queryQuoteEmbeddingsByRange = async (
       _searchTxt,
-      _resultCount,
+      _radius,
     ) => {
-    console.log(`queryQuotesEmbeddingsByKNN started`);
+    console.log(`queryQuotesEmbeddingsByRange started`);
     let results = {};
     if (_searchTxt) {
-      _resultCount = _resultCount ?? 5;
-      const searchTxtVectorArr = await generateSentenceEmbeddings(_searchTxt);
-      //const searchQuery = `(*)=>[KNN ${_resultCount} @embeddings $searchBlob AS score]`;
-      const searchQuery = `@embeddings:[VECTOR_RANGE 0.5 $searchBlob]=>{$YIELD_DISTANCE_AS: vector_dist}`;
+      _radius = _radius ?? 0.5;
+      const searchTxtVectorArr = await generateSentenceEmbeddings(_searchTxt);      
+      const searchQuery = `@embeddings:[VECTOR_RANGE ${_radius} $searchBlob]=>{$YIELD_DISTANCE_AS: vector_dist}`;
       results = await redisClient.call('FT.SEARCH', 
                                        'idx:quotes', 
                                        searchQuery, 
-                                       'RETURN', '4', 'vector_dist', 'author', 'quote', 'source', 
-                                       'SORTBY', 'vector_dist', 
-                                       'PARAMS', '2', 'searchBlob', 
-                                                      float32Buffer(searchTxtVectorArr), 
-                                       'DIALECT', '2');
+                                       'PARAMS', 2, 'searchBlob', 
+                                                    float32Buffer(searchTxtVectorArr), 
+                                       'SORTBY', 'vector_dist', 'ASC', 
+                                       'RETURN', 4, 'vector_dist', 'author', 'quote', 'source', 
+                                       'DIALECT', 2);
     } else {
       throw 'Search text cannot be empty';
     }
@@ -45,7 +35,7 @@ const queryQuoteEmbeddingsByKNN = async (
   };
 
 async function main() {
-  const results = await queryQuoteEmbeddingsByKNN('dream love death')
+  const results = await queryQuoteEmbeddingsByRange('dream love death')
   console.log(results)
   await disconnect()
 }
