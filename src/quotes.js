@@ -1027,6 +1027,207 @@ export const quotes = [
     "author": "Oscar Wilde",
     "quote": "To lose one parent may be regarded as a misfortune; to lose both looks like carelessness.",
     "source": "The Importance of Being Earnest"
-  } 
+  },
+
+  {
+    "author": "George Orwell",
+    "quote": "In a time of deceit telling the truth is a revolutionary act.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "War is peace. Freedom is slavery. Ignorance is strength.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "Big Brother is watching you.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "All animals are equal, but some animals are more equal than others.",
+    "source": "Animal Farm"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "If you want a picture of the future, imagine a boot stamping on a human face—forever.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "The most effective way to destroy people is to deny and obliterate their own understanding of their history.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "Doublethink means the power of holding two contradictory beliefs in one's mind simultaneously, and accepting both of them.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "We shall meet in the place where there is no darkness.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "The best books... are those that tell you what you know already.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "Until they become conscious they will never rebel, and until after they have rebelled they cannot become conscious.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "If liberty means anything at all it means the right to tell people what they do not want to hear.",
+    "source": "Animal Farm"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "Freedom is the freedom to say that two plus two make four. If that is granted, all else follows.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "The creatures outside looked from pig to man, and from man to pig, and from pig to man again; but already it was impossible to say which was which.",
+    "source": "Animal Farm"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "To see what is in front of one's nose needs a constant struggle.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "Who controls the past controls the future. Who controls the present controls the past.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "The great enemy of clear language is insincerity.",
+    "source": "Politics and the English Language"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "The essence of being human is that one does not seek perfection.",
+    "source": "Reflections on Gandhi"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "Political language... is designed to make lies sound truthful and murder respectable, and to give an appearance of solidity to pure wind.",
+    "source": "Politics and the English Language"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "Every generation imagines itself to be more intelligent than the one that went before it, and wiser than the one that comes after it.",
+    "source": "The Collected Essays, Journalism and Letters of George Orwell"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "The object of terrorism is terrorism. The object of oppression is oppression. The object of torture is torture. The object of murder is murder. The object of power is power.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "Happiness can only exist in acceptance.",
+    "source": "Coming Up for Air"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "Power is not a means, it is an end.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "Power is in tearing human minds to pieces and putting them together again in new shapes of your own choosing.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "The choice for mankind lies between freedom and happiness and for the great bulk of mankind, happiness is better.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "The further a society drifts from truth, the more it will hate those who speak it.",
+    "source": "Attributed"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "Perhaps one did not want to be loved so much as to be understood.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "To die hating them, that was freedom.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "Orthodoxy means not thinking—not needing to think. Orthodoxy is unconsciousness.",
+    "source": "Nineteen Eighty-Four"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "The only good human being is a dead one.",
+    "source": "Animal Farm"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "The essence of being human is that one does not seek perfection.",
+    "source": "Reflections on Gandhi"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "It’s frightful that people who are so ignorant should have so much influence.",
+    "source": "A Clergyman's Daughter"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "If people cannot write well, they cannot think well, and if they cannot think well, others will do their thinking for them.",
+    "source": "Animal Farm"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "Myths which are believed in tend to become true.",
+    "source": "The Collected Essays, Journalism and Letters of George Orwell"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "A people that elect corrupt politicians, imposters, thieves, and traitors are not victims... but accomplices.",
+    "source": "Attributed"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "To see what is in front of one’s nose needs a constant struggle.",
+    "source": "In Front of Your Nose"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "On the whole, human beings want to be good, but not too good, and not quite all the time.",
+    "source": "All Art is Propaganda"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "The quickest way of ending a war is to lose it.",
+    "source": "Homage to Catalonia"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "All the war-propaganda, all the screaming and lies and hatred, comes invariably from people who are not fighting.",
+    "source": "Homage to Catalonia"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "Sometimes the first duty of intelligent men is the restatement of the obvious.",
+    "source": "Essays and Journalism"
+  },
+  {
+    "author": "George Orwell",
+    "quote": "At fifty everyone has the face he deserves.",
+    "source": "British Pamphleteer"
+  }
   
 ]

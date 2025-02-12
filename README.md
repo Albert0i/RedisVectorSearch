@@ -130,6 +130,21 @@ FT.SEARCH documents "*=>[KNN 10 @doc_embedding $BLOB]" PARAMS 2 BLOB "\x12\xa9\x
 
 
 #### II. Loading the data
+
+Our quote database consists of more than two hundreds famous quotes with fhe form of:
+
+```
+{
+    "author": "Oscar Wilde",
+    "quote": "Women are made to be loved, not understood.",
+    "source": "Lord Arthur Savile's Crime and Other Stories"
+}
+```
+
+> To generate sentence embeddings, we'll make use of a Hugging Face model titled [Xenova/all-distilroberta-v1](https://huggingface.co/Xenova/all-distilroberta-v1). It's a compatible version of [sentence-transformers/all-distilroberta-v1](https://huggingface.co/sentence-transformers/all-distilroberta-v1) for transformer.js with ONNX weights.
+
+> Now iterate over the quotes array to store the data as JSON documents in Redis by using the JSON.SET command. 
+
 loadData.js
 ```
 async function main() {
