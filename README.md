@@ -1,9 +1,11 @@
-### <a title="Allows vector queries against the value in this attribute. This requires query dialect 2 or above (introduced in RediSearch v2.4." >Redis</a> [Vector Search](https://redis.io/docs/latest/develop/interact/search-and-query/query/vector-search/)
+### Redis [Vector Search](https://redis.io/docs/latest/develop/interact/search-and-query/query/vector-search/)
 
 
 #### Prologue
 
-[Workshop: Searching document data with Redis, JSON, and vector-similarity](https://youtu.be/e4A_k-hFIa4)
+- [Workshop: Searching document data with Redis, JSON, and vector-similarity](https://youtu.be/e4A_k-hFIa4)
+
+- VECTOR - Allows vector queries against the value in this attribute. This requires [query dialect 2](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/dialects/#dialect-2) or above (introduced in [RediSearch v2.4](https://github.com/RediSearch/RediSearch/releases/tag/v2.4.3)). For more information, see [Vector Fields](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/).
 
 
 #### I. [Vectors](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/) Basics (TL;DR)
