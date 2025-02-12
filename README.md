@@ -77,13 +77,13 @@ FT.CREATE documents
 
 **HNSW index**
 
-HNSW, or hierarchical navigable small world, is an approximate nearest neighbors algorithm that uses a multi-layered graph to make vector search more scalable.
+> HNSW, or hierarchical navigable small world, is an approximate nearest neighbors algorithm that uses a multi-layered graph to make vector search more scalable.
 
 - The lowest layer contains all data points, and each higher layer contains a subset, forming a hierarchy.
 
 - At runtime, the search traverses the graph on each layer from top to bottom, finding the local minima before dropping to the subsequent layer.
 
-Choose the HNSW index type when you have larger datasets (> 1M documents) or when search performance and scalability are more important than perfect search accuracy.
+> Choose the HNSW index type when you have larger datasets (> 1M documents) or when search performance and scalability are more important than perfect search accuracy.
 
 | Attribute | Description |
 | ----------- | ----------- |
@@ -112,7 +112,7 @@ FT.CREATE documents
     EF_CONSTRUCTION 250
 ```
 
-In the example above, an index named documents is created over hashes with the key prefix docs: and an HNSW vector field named doc_embedding with five index attributes: TYPE, DIM, DISTANCE_METRIC, M, and EF_CONSTRUCTION.
+> In the example above, an index named documents is created over hashes with the key prefix docs: and an HNSW vector field named doc_embedding with five index attributes: TYPE, DIM, DISTANCE_METRIC, M, and EF_CONSTRUCTION.
 
 **Distance metrics**
 
@@ -125,6 +125,18 @@ In the example above, an index named documents is created over hashes with the k
 - Cosine distance is a measure of the angle between two non-zero vectors in a multi-dimensional space. It is derived from the cosine similarity, which measures the cosine of the angle between two vectors. While cosine similarity ranges from -1 to 1, cosine distance is a measure that ranges from 0 to 1 and represents the angular distance between the vectors.
 
 > The above metrics calculate distance between two vectors, where the smaller the value is, the closer the two vectors are in the vector space.
+
+**Hash**
+
+> Store or update vectors and any metadata in hashes using the HSET command.
+
+```
+HSET docs:01 doc_embedding <vector_bytes> category sports
+```
+
+> Hash values are stored as binary-safe strings. The value <vector_bytes> represents the vector's underlying memory buffer.
+
+> The vector blob size must match the dimension and float type of the vector field specified in the index's schema; otherwise, indexing will fail.
 
 **JSON**
 
