@@ -229,6 +229,36 @@ main()
 ```
 ![alt knnQuery](img/knnQuery.JPG)
 
+**Radius**
+
+> Instead of the number of nearest neighbors, you need to pass the radius along with the index name, the vector field name, and the vector's binary value:
+
+```
+FT.SEARCH index "@field:[VECTOR_RANGE radius $vector]" PARAMS 2 vector "binary_data" DIALECT 2
+```
+
+> If you want to sort by distance, then you must yield the distance via the range query parameter $YIELD_DISTANCE_AS:
+
+```
+FT.SEARCH index "@field:[VECTOR_RANGE radius $vector]=>{$YIELD_DISTANCE_AS: dist_field}" PARAMS 2 vector "binary_data" SORTBY dist_field DIALECT 2
+```
+
+> Here is a more detailed explanation of this query:
+
+1. **Range query**: the syntax of a radius query is very similar to the regular range query, except for the keyword VECTOR_RANGE. You can also combine a vector radius query with other queries in the same way as regular range queries. See [combined queries article](https://redis.io/docs/latest/develop/interact/search-and-query/query/combined/) for more details.
+
+2. **Additional step**: the => arrow means that the range query is followed by evaluating additional parameters.
+
+3. **Range query parameters**: parameters such as $YIELD_DISTANCE_AS can be found in the [vectors reference documentation](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/vectors/).
+
+4. **Vector binary data**: you need to use PARAMS to pass the binary representation of the vector.
+
+5. **Dialect**: vector search has been available since version two of the query dialect.
+
+> The example below shows a radius query that returns the quote and the distance within a radius of 0.5. The result is sorted by the distance.
+
+
+
 
 #### V. Bibliography
 1. [Redis as a Vector Database Explained](https://youtu.be/xhLXZ0Hqudk)
