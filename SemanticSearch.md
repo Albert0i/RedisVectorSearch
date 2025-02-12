@@ -107,13 +107,14 @@ Different types of unstructured data require specific embedding models to perfor
 1 What is a limitation of traditional full-text search when searching for relevant documents?
 
 
-- It cannot handle numerical filters
+- It cannot handle numerical filters (　)
 
-- It does not differentiate documents with similar wording but different meaning
+- It does not differentiate documents with similar wording but different meaning ( &#10003;
+ )
 
-- It cannot process geospatial data
+- It cannot process geospatial data (　)
 
-- It does not support tag filters
+- It does not support tag filters (　)
 
 
 ### EOF (2025/02/15)
