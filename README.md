@@ -152,6 +152,8 @@ main()
 
 #### III. Creating Vector index 
 
+##### Understand vector databases
+
 > Data is often unstructured, which means that it isn't described by a well-defined schema. Examples of unstructured data include text passages, images, videos, or audio. One approach to storing and searching through unstructured data is to use vector embeddings.
 
 > **What are vectors?** In machine learning and AI, vectors are sequences of numbers that represent data. They are the inputs and outputs of models, encapsulating underlying information in a numerical form. Vectors transform unstructured data, such as text, images, videos, and audio, into a format that machine learning models can process.
@@ -160,10 +162,23 @@ main()
 
 - **Enhancing traditional search.** Traditional keyword or lexical search relies on exact matches of words or phrases, which can be limiting. In contrast, vector search, or semantic search, leverages the rich information captured in vector embeddings. By mapping data into a vector space, similar items are positioned near each other based on their meaning. This approach allows for more accurate and meaningful search results, as it considers the context and semantic content of the query rather than just the exact words used.
 
+##### Create an index with a vector field
+
+You must create an index to query document metadata or to perform vector searches. Use the [FT.CREATE](https://redis.io/docs/latest//commands/ft.create) command:
+
+```
+FT.CREATE idx:bikes_vss ON JSON
+  PREFIX 1 bikes: SCORE 1.0
+  SCHEMA
+    $.model TEXT WEIGHT 1.0 NOSTEM
+    $.brand TEXT WEIGHT 1.0 NOSTEM
+    $.price NUMERIC
+    $.type TAG SEPARATOR ","
+    $.description AS description TEXT WEIGHT 1.0
+    $.description_embeddings AS vector VECTOR FLAT 6 TYPE FLOAT32 DIM 768 DISTANCE_METRIC COSINE
+```
 
 
-
-> You need to have the following features configured for your Redis server: JSON and Search and query.
 
 ```
 FT.CREATE idx:quotes ON JSON PREFIX 1 quote:
