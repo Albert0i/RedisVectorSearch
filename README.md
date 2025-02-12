@@ -260,8 +260,41 @@ FT.SEARCH index "@field:[VECTOR_RANGE radius $vector]=>{$YIELD_DISTANCE_AS: dist
 
 radiusQuery.js
 ```
+const queryQuoteEmbeddingsByRange = async (
+      _searchTxt,
+      _radius,
+    ) => {
+    console.log(`queryQuotesEmbeddingsByRange started`);
+    let results = {};
+    if (_searchTxt) {
+      _radius = _radius ?? 1.5;
+      const searchTxtVectorArr = await generateSentenceEmbeddings(_searchTxt);      
+      const searchQuery = `@embeddings:[VECTOR_RANGE ${_radius} $searchBlob]=>{$YIELD_DISTANCE_AS: vector_dist}`;      
+      results = await redisClient.call('FT.SEARCH', 
+                                       'idx:quotes', 
+                                       searchQuery, 
+                                       'PARAMS', 2, 'searchBlob', 
+                                                    float32Buffer(searchTxtVectorArr), 
+                                       'SORTBY', 'vector_dist', 'ASC', 
+                                       'RETURN', 4, 'vector_dist', 'author', 'quote', 'source', 
+                                       'DIALECT', 2);
+    } else {
+      throw 'Search text cannot be empty';
+    }
+  
+    return results;
+  };
 
+async function main() {
+  const results = await queryQuoteEmbeddingsByRange('dream love death')
+  console.log(results)
+  await disconnect()
+}
+
+main()
 ```
+
+![alt radiusQuery](img/radiusQuery.JPG)
 
 
 #### V. Bibliography

@@ -17,7 +17,7 @@ const queryQuoteEmbeddingsByRange = async (
     console.log(`queryQuotesEmbeddingsByRange started`);
     let results = {};
     if (_searchTxt) {
-      _radius = _radius ?? 0.5;
+      _radius = _radius ?? 1.5;
       const searchTxtVectorArr = await generateSentenceEmbeddings(_searchTxt);      
       const searchQuery = `@embeddings:[VECTOR_RANGE ${_radius} $searchBlob]=>{$YIELD_DISTANCE_AS: vector_dist}`;      
       results = await redisClient.call('FT.SEARCH', 
