@@ -170,7 +170,7 @@ FT.CREATE idx:quotes ON JSON PREFIX 1 quote:
 
 > A vector search query on a vector field allows you to find all vectors in a vector space that are close to a given vector. You can query for the k-nearest neighbors or vectors within a given radius.
 
-**K-neareast neighbours (KNN)**
+##### **K-neareast neighbours (KNN)**
 
 > The Redis command [FT.SEARCH](https://redis.io/docs/latest//commands/ft.search) takes the index name, the query string, and additional query parameters as arguments. You need to pass the number of nearest neighbors, the vector field name, and the vector's binary representation in the following way:
 
@@ -229,7 +229,7 @@ main()
 ```
 ![alt knnQuery](img/knnQuery.JPG)
 
-**Radius**
+##### **Radius**
 
 > Instead of the number of nearest neighbors, you need to pass the radius along with the index name, the vector field name, and the vector's binary value:
 
