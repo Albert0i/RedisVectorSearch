@@ -4,10 +4,10 @@ async function main() {
   const results = await redisClient.call( 'FT.SEARCH', 
                                           'idx:quotes', 
                                           '@quote:(dream | love | death)', 
-                                          'RETURN', 2, 'quote', 'source', 
-                                          'HIGHLIGHT', 'FIELDS', 1, 'quote',
+                                          'RETURN', 3, 'author', 'quote', 'source', 
+                                          'HIGHLIGHT', 'FIELDS', 1, 'quote', 
                                           'SORTBY', 'source', 
-                                          'LIMIT', 0, 3 )
+                                          'LIMIT', 0, 5 )
   console.log(results)
   await disconnect()
 }

@@ -18,15 +18,16 @@ const float32Buffer = (arr) => {
     DIALECT 2
 */
 const queryQuoteEmbeddingsByKNN = async (
+      _author,
       _searchTxt,
-      _resultCount,
+      _resultCount
     ) => {
     console.log(`queryQuotesEmbeddingsByKNN started`);
     let results = {};
     if (_searchTxt) {
       _resultCount = _resultCount ?? 5;
       const searchTxtVectorArr = await generateSentenceEmbeddings(_searchTxt);
-      const searchQuery = `(*)=>[KNN ${_resultCount} @embeddings $searchBlob AS score]`;
+      const searchQuery = `(@author:${_author})=>[KNN ${_resultCount} @embeddings $searchBlob AS score]`;
   
       results = await redisClient.call('FT.SEARCH', 
                                        'idx:quotes', 
@@ -43,7 +44,7 @@ const queryQuoteEmbeddingsByKNN = async (
   };
 
 async function main() {
-  const results = await queryQuoteEmbeddingsByKNN('dream love death')
+  const results = await queryQuoteEmbeddingsByKNN('poe', 'dream love death')
   console.log(results)
   await disconnect()
 }
