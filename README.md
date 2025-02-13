@@ -320,7 +320,7 @@ FT.SEARCH documents "*=>[KNN 10 @doc_embedding $BLOB]=>{$EF_RUNTIME: $EF; $YIELD
 
 > To explore additional Python vector search examples, review recipes for the [Redis Python](https://github.com/redis-developer/redis-ai-resources/blob/main/python-recipes/vector-search/00_redispy.ipynb) client library and the [Redis Vector Library](https://github.com/redis-developer/redis-ai-resources/blob/main/python-recipes/vector-search/01_redisvl.ipynb).
 
-**Filter examples**
+##### **Filter examples**
 
 > For these examples, assume you created an index named movies with records of different movies and their metadata.
 
