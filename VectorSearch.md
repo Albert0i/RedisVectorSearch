@@ -33,7 +33,11 @@ To determine similarity **internal product looks at both angle and magnitude of 
 
 How do we generalise this for the n-dimensional space? First of all, to apply the inner product to two vectors, they need to be of the same size (in our example we'll work with two four-dimensional vectors). Then we multiply element-wise the ordered vectors, element by element, and in the end we sum the products. The result of a dot product of two vectors is a scalar.
 
-a = (3, 6, 1, 8) b = (3, 2, 2, 1) a⋅b = 3x3 + 6x2 + 1x2 +8x1 = 9 + 12 + 2 + 8 = 31
+a = (3, 6, 1, 8) 
+
+b = (3, 2, 2, 1) 
+
+a⋅b = 3x3 + 6x2 + 1x2 +8x1 = 9 + 12 + 2 + 8 = 31
 
 The generalised formula for this product is:
 
