@@ -1,0 +1,184 @@
+First Result: (Vitality, internet, violate, garden, expectation, push, economic, write, container, rather;)
+
+[
+  5,
+  'quote:28',
+  [
+    'score',
+    '1.38116872311',
+    'author',
+    'Edgar Allan Poe',
+    'quote',
+    'I would define, in brief, the poetry of words as the rhythmical creation of Beauty.',
+    'source',
+    'Edgar Allan Poe'
+  ],
+  'quote:186',
+  [
+    'score',
+    '1.48993802071',
+    'author',
+    'Oscar Wilde',
+    'quote',
+    'A poet can survive everything but a misprint.',
+    'source',
+    'Oscariana'
+  ],
+  'quote:19',
+  [
+    'score',
+    '1.53942656517',
+    'author',
+    'Edgar Allan Poe',
+    'quote',
+    'Words have no power to impress the mind without the exquisite horror of their reality.',
+    'source',
+    'The Narrative of Arthur Gordon Pym of Nantucket'
+  ],
+  'quote:36',
+  [
+    'score',
+    '1.53942656517',
+    'author',
+    'Edgar Allan Poe',
+    'quote',
+    'Words have no power to impress the mind without the exquisite horror of their reality.',
+    'source',
+    'The Narrative of Arthur Gordon Pym of Nantucket'
+  ],
+  'quote:56',
+  [
+    'score',
+    '1.54126286507',
+    'author',
+    'Fyodor Dostoevsky',
+    'quote',
+    'Taking a new step, uttering a new word, is what people fear most.',
+    'source',
+    'Crime and Punishment'
+  ]
+]
+
+Second Result: (Anxiety, sandwich, shell, mobile, generate, desire, stubborn, time, generosity, cathedral;)
+[
+  5,
+  'quote:28',
+  [
+    'score',
+    '1.34193301201',
+    'author',
+    'Edgar Allan Poe',
+    'quote',
+    'I would define, in brief, the poetry of words as the rhythmical creation of Beauty.',
+    'source',
+    'Edgar Allan Poe'
+  ],
+  'quote:45',
+  [
+    'score',
+    '1.39369928837',
+    'author',
+    'Fyodor Dostoevsky',
+    'quote',
+    'Man is sometimes extraordinarily, passionately, in love with suffering.',
+    'source',
+    'Crime and Punishment'
+  ],
+  'quote:25',
+  [
+    'score',
+    '1.42783308029',
+    'author',
+    'Edgar Allan Poe',
+    'quote',
+    'There are chords in the hearts of the most reckless which cannot be touched without emotion.',
+    'source',
+    'The Masque of the Red Death'
+  ],
+  'quote:59',
+  [
+    'score',
+    '1.43170964718',
+    'author',
+    'Fyodor Dostoevsky',
+    'quote',
+    'There is immeasurably more left inside than what comes out in words.',
+    'source',
+    'The Brothers Karamazov'
+  ],
+  'quote:56',
+  [
+    'score',
+    '1.43729805946',
+    'author',
+    'Fyodor Dostoevsky',
+    'quote',
+    'Taking a new step, uttering a new word, is what people fear most.',
+    'source',
+    'Crime and Punishment'
+  ]
+]
+
+Third Result: (Opportunity, endeavor, wacky, guideline, fantasy, imagine, poem, superficial, galaxy, psychology)
+[
+  5,
+  'quote:28',
+  [
+    'score',
+    '1.28019690514',
+    'author',
+    'Edgar Allan Poe',
+    'quote',
+    'I would define, in brief, the poetry of words as the rhythmical creation of Beauty.',
+    'source',
+    'Edgar Allan Poe'
+  ],
+  'quote:186',
+  [
+    'score',
+    '1.43989539146',
+    'author',
+    'Oscar Wilde',
+    'quote',
+    'A poet can survive everything but a misprint.',
+    'source',
+    'Oscariana'
+  ],
+  'quote:233',
+  [
+    'score',
+    '1.46661531925',
+    'author',
+    'George Orwell',
+    'quote',
+    'Orthodoxy means not thinking—not needing to think. Orthodoxy is unconsciousness.',
+    'source',
+    'Nineteen Eighty-Four'
+  ],
+  'quote:19',
+  [
+    'score',
+    '1.47677397728',
+    'author',
+    'Edgar Allan Poe',
+    'quote',
+    'Words have no power to impress the mind without the exquisite horror of their reality.',
+    'source',
+    'The Narrative of Arthur Gordon Pym of Nantucket'
+  ],
+  'quote:36',
+  [
+    'score',
+    '1.47677397728',
+    'author',
+    'Edgar Allan Poe',
+    'quote',
+    'Words have no power to impress the mind without the exquisite horror of their reality.',
+    'source',
+    'The Narrative of Arthur Gordon Pym of Nantucket'
+  ]
+]
+
+
+
+
