@@ -12,7 +12,7 @@
 
 Redis includes a [high-performance vector database](https://redis.io/blog/benchmarking-results-for-vector-databases/) that lets you perform semantic searches over vector embeddings. You can augment these searches with filtering over text, numerical, geospatial, and tag metadata.
 
-**Create a vector index**
+##### **Create a vector index**
 
 ```
 FT.CREATE <index_name>
@@ -33,7 +33,7 @@ FT.CREATE <index_name>
 | index_attribute_name | Vector field attribute name.. |
 | index_attribute_value | Vector field attribute value. |
 
-**FLAT INDEX**
+##### **FLAT INDEX**
 
 > Choose the FLAT index when you have small datasets (< 1M vectors) or when perfect search accuracy is more important than search latency.
 
@@ -55,7 +55,7 @@ FT.CREATE documents
 
 > In the example above, an index named documents is created over hashes with the key prefix docs: and a FLAT vector field named doc_embedding with three index attributes: TYPE, DIM, and DISTANCE_METRIC.
 
-**HNSW index**
+##### **HNSW index**
 
 > HNSW, or hierarchical navigable small world, is an approximate nearest neighbors algorithm that uses a multi-layered graph to make vector search more scalable.
 
@@ -94,9 +94,9 @@ FT.CREATE documents
 
 > In the example above, an index named documents is created over hashes with the key prefix docs: and an HNSW vector field named doc_embedding with five index attributes: TYPE, DIM, DISTANCE_METRIC, M, and EF_CONSTRUCTION.
 
-**Distance metrics**
+##### **Distance metrics**
 
-> Redis supports three popular distance metrics to measure the degree of similarity between two vectors.
+> Redis supports three popular distance metrics to measure the degree of similarity between two vectors u, v; where n is the length of the vectors:.
 
 ![alt Distance metric](img/DistanceMetric.JPG)
 
@@ -106,7 +106,7 @@ FT.CREATE documents
 
 > The above metrics calculate distance between two vectors, where the smaller the value is, the closer the two vectors are in the vector space.
 
-**Hash**
+##### **Hash**
 
 > Store or update vectors and any metadata in hashes using the HSET command.
 
@@ -118,7 +118,7 @@ HSET docs:01 doc_embedding <vector_bytes> category sports
 
 > The vector blob size must match the dimension and float type of the vector field specified in the index's schema; otherwise, indexing will fail.
 
-**JSON**
+##### **JSON**
 
 > To store vectors in Redis as JSON, you store the vector as a JSON array of floats. Note that this differs from vector storage in Redis hashes, which are instead stored as raw bytes.
 
@@ -131,7 +131,7 @@ JSON.SET docs:01 $ '{"doc_embedding":[0.34,0.63,-0.54,-0.69,0.98,0.61], "categor
 
 > To issue a vector search query with FT.SEARCH, you must set the DIALECT option to >= 2. See the [dialects documentation](https://redis.io/docs/latest/develop/interact/search-and-query/advanced-concepts/dialects/) for more information.
 
-**KNN vector search**
+##### **KNN vector search**
 
 > KNN vector search finds the top k nearest neighbors to a query vector. It has the following syntax:
 ```
