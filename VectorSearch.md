@@ -138,7 +138,7 @@ The closest the angle between the two vectors to zero, the closest is the cosine
 Congratulations! You are now able to calculate the similarity of vectors to retrieve semantically relevant results!
 
 
-#### V. Quiz | Introduction to Vector
+#### V. Quiz | Introduction to Vector Search
 
 1. What operation must be executed in preparation for performing vector search?
 
