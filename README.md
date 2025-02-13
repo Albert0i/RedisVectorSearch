@@ -260,6 +260,8 @@ FT.SEARCH documents "(@title:Sports @year:[2020 2022])=>[KNN 10 @doc_embedding $
 
 - The results of the KNN query will always be accurate in this mode, even if the underlying vector index algorithm is an approximate one.
 
+> The execution mode may switch from batch mode to ad-hoc brute-force mode during the run, based on updated estimations of relevant factors from one batch to another.
+
 ##### **Runtime query parameters**
 
 > By default, Redis selects the best filter mode to optimize query execution. You can override the auto-selected policy using these optional parameters:
