@@ -73,6 +73,8 @@ FT.CREATE documents
 
 *Optional attributes*
 
+> [HNSW](https://arxiv.org/ftp/arxiv/papers/1603/1603.09320.pdf) supports a number of additional parameters to tune the accuracy of the queries, while trading off performance.
+
 | Attribute | Description |
 | ----------- | ----------- |
 | M | Max number of outgoing edges (connections) for each node in a graph layer. On layer zero, the max number of connections will be 2 * M. Higher values increase accuracy, but also increase memory usage and index build time. The default is 16. |
