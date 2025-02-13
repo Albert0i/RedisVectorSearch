@@ -102,6 +102,8 @@ FT.CREATE documents
 
 ![alt Distance metric](img/DistanceMetric.JPG)
 
+> The above metrics calculate distance between two vectors, where the smaller the value is, the closer the two vectors are in the vector space.
+
 - **Euclidean Distance (L2 norm)** calculates the linear distance between two points within a multi-dimensional space. Lower values indicate closer proximity, and hence higher similarity. For illustration purposes, let's assess `product 1 `and `product 2` from the earlier ecommerce dataset and determine the `Euclidean Distance` considering all features. 
 ![alt Euclidean distance](img/EuclideanDistance.webp)
 
@@ -109,8 +111,6 @@ FT.CREATE documents
 
 - **Cosine Similarity** measures the cosine of the angle between two vectors. The cosine similarity value ranges between -1 and 1. A value closer to 1 implies a smaller angle and higher similarity, while a value closer to -1 implies a larger angle and lower similarity. Cosine similarity is particularly popular in NLP when dealing with text vectors. If two vectors are pointing in the same direction, the cosine of the angle between them is 1. If they're orthogonal, the cosine is 0, and if they're pointing in opposite directions, the cosine is -1.
 ![alt Cosine distance](img/CosineSimilarity.webp)
-
-> The above metrics calculate distance between two vectors, where the smaller the value is, the closer the two vectors are in the vector space.
 
 ##### **Hash**
 
