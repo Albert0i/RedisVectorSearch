@@ -140,7 +140,7 @@ The generalized formula for this product is:
 
 **Cosine similarity**
 
-Cosine similarity is the first metric you would reach since it gives consistently good results, especially for high dimensional vector spaces. It is a good choice for use cases like document similarity, image comparison, pose comparison (in computer vision), and much more. Unlike the internal product, cosine similarity looks only at the angle between two vectors to determine similarity. Specifically, it looks at the cosine of the angle.
+Cosine similarity is the first metric you would reach since it gives consistently good results, especially for high dimensional vector spaces. It is a good choice for use cases like document similarity, image comparison, pose comparison (in computer vision), and much more. Unlike the internal product, cosine similarity looks **only at the angle** between two vectors to determine similarity. Specifically, it looks at the cosine of the angle.
 
 ![alt Cosine similarity](img/Cosine-similarity.JPG)
 
