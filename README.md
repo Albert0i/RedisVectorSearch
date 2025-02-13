@@ -102,10 +102,12 @@ FT.CREATE documents
 
 ![alt Distance metric](img/DistanceMetric.JPG)
 
-- Euclidean distance is a measure of the straight-line distance between two points in Euclidean space. In two-dimensional space, this is the familiar distance we think of in geometry.
+- **Euclidean Distance (L2 norm)** calculates the linear distance between two points within a multi-dimensional space. Lower values indicate closer proximity, and hence higher similarity. For illustration purposes, let's assess `product 1 `and `product 2` from the earlier ecommerce dataset and determine the `Euclidean Distance` considering all features. 
 ![alt Euclidean distance](img/EuclideanDistance.webp)
-- The inner product, also known as the dot product, is a fundamental operation in linear algebra and vector calculus. It is a way to multiply two vectors to produce a scalar (a single number).
-- Cosine distance is a measure of the angle between two non-zero vectors in a multi-dimensional space. It is derived from the cosine similarity, which measures the cosine of the angle between two vectors. While cosine similarity ranges from -1 to 1, cosine distance is a measure that ranges from 0 to 1 and represents the angular distance between the vectors.
+
+- **Inner Product** (dot product) The inner product (or dot product) isn't a distance metric in the traditional sense but can be used to calculate similarity, especially when vectors are normalized (have a magnitude of 1). It's the sum of the products of the corresponding entries of the two sequences of numbers. The inner product can be thought of as a measure of how much two vectors "align" in a given vector space. Higher values indicate higher similarity. However, the raw values can be large for long vectors; hence, normalization is recommended for better interpretation. If the vectors are normalized, their dot product will be 1 if they are identical and 0 if they are orthogonal (uncorrelated).
+
+- **Cosine Similarity** measures the cosine of the angle between two vectors. The cosine similarity value ranges between -1 and 1. A value closer to 1 implies a smaller angle and higher similarity, while a value closer to -1 implies a larger angle and lower similarity. Cosine similarity is particularly popular in NLP when dealing with text vectors. If two vectors are pointing in the same direction, the cosine of the angle between them is 1. If they're orthogonal, the cosine is 0, and if they're pointing in opposite directions, the cosine is -1.
 ![alt Cosine distance](img/CosineSimilarity.webp)
 
 > The above metrics calculate distance between two vectors, where the smaller the value is, the closer the two vectors are in the vector space.
