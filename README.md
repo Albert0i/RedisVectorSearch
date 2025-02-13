@@ -282,11 +282,11 @@ FT.SEARCH documents "(@title:Sports @year:[2020 2022])=>[KNN 10 @doc_embedding $
 
 ##### **important notes**
 
-1. When performing a KNN vector search, you specify <top_k> nearest neighbors. However, the default Redis query LIMIT parameter (used for pagination) is 10. In order to get <top_k> returned results, you must also specify LIMIT 0 <top_k> in your search command. See examples below.
+1. When performing a KNN vector search, you specify <top_k> nearest neighbors. However, **the default Redis query LIMIT parameter (used for pagination) is 10**. In order to get <top_k> returned results, you must also specify LIMIT 0 <top_k> in your search command. See examples below.
 
-2. By default, the results are sorted by their document's score. To sort by vector similarity score, use SORTBY <distance_field>. See examples below.
+2. **By default, the results are sorted by their document's score**. To sort by vector similarity score, use SORTBY <distance_field>. See examples below.
 
-3. Depending on your chosen distance metric, the calculated distance between vectors in an index have different bounds. For example, Cosine distance is bounded by 2, while L2 distance is not bounded. When performing a vector range query, the best practice is to adjust the <radius> parameter based on your use case and required recall or precision metrics.
+3. Depending on your chosen distance metric, the calculated distance between vectors in an index have different bounds. For example, **Cosine distance is bounded by 2**, while L2 distance is not bounded. **When performing a vector range query, the best practice is to adjust the <radius> parameter based on your use case** and required recall or precision metrics.
 
 ##### **Vector search examples**
 
