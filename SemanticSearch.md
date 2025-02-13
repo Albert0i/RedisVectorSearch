@@ -5,17 +5,17 @@
 
 Redis Stack, with its flexible secondary indexing capabilities, supports filters for textual or numerical fields and enables different strategies to retrieve the desired data. In fact, with Redis Stack, it is possible to retrieve documents using full-text, numeric, and tag filters and include additional geospatial filtering, leveraging the supported geometries and spatial relations.
 
-In particular, Redis Stack full-text search can be extended to include synonyms, consider the base form of a word, or even consider the pronunciation using phonetic matching. These powerful tools help you dive into your data and extract the relevant content. However, searching for the best matches using the traditional filters does not always reflect the user's intention because full-text search is based on literal matches of words and their variations but does not dig into the meaning of the query for which the user would like to get an answer. To make an example, if we are interested in animals chasing other animals, we may search by the term chase and get:
+In particular, Redis Stack full-text search can be extended to include synonyms, consider the base form of a word, or even consider the pronunciation using phonetic matching. These powerful tools help you dive into your data and extract the relevant content. However, searching for the best matches using the traditional filters does not always reflect the user's intention because full-text search is based on literal matches of words and their variations but does not dig into the meaning of the query for which the user would like to get an answer. To make an example, if we are interested in animals chasing other animals, we may search by the term *chase* and get:
 
 - "The cat chased the dog"
 
 - "The dog chased the cat"
 
-However, if we would like to filter the results further and get the specific sentence The dog chased the cat or similar sentences preserving the same meaning (dogs chasing cats), full-text cannot help further, as it cannot dig into the meaning of the text stored in the database.
+However, if we would like to filter the results further and get the specific sentence *The dog chased the cat* or similar sentences preserving the same meaning (dogs chasing cats), full-text cannot help further, as it cannot dig into the meaning of the text stored in the database.
 
 **What is Semantic Search?**
 
-Semantic search extends traditional database search methods to interpret the user's query and extract the documents that match the semantic meaning of the query. With the semantic search features, it is possible to query the database in natural language: it understands the semantics behind the query and returns meaningful results. Such technology has been on the market for years. However, semantic search is gaining more traction thanks to the advances in Artificial Intelligence and Machine Learning and the availability of on-demand scalable and affordable computational resources. In short, semantic search allows querying the database with a question such as "return all the documents with dogs chasing cats." In the next section, we will understand how data modeling is crucial to performing semantic search and what are the popular methods.
+Semantic search extends traditional database search methods to interpret the user's query and extract the documents that match the semantic meaning of the query. With the semantic search features, it is possible to query the database in natural language: it understands the semantics behind the query and returns meaningful results. Such technology has been on the market for years. However, semantic search is gaining more traction thanks to the advances in Artificial Intelligence and Machine Learning and the availability of on-demand scalable and affordable computational resources. In short, semantic search allows querying the database with a question such as "*return all the documents with dogs chasing cats*." In the next section, we will understand how data modeling is crucial to performing semantic search and what are the popular methods.
 
 
 #### II. Modeling unstructured data
