@@ -256,7 +256,7 @@ FT.SEARCH documents "(@title:Sports @year:[2020 2022])=>[KNN 10 @doc_embedding $
 
 - The score of every vector corresponding to a document that passes the filter is computed, and the <top_k> results are selected and returned.
 
-- This approach is preferable when the number of documents passing the <primary_filter_query> is relatively small.
+- *This approach is preferable when the number of documents passing the <primary_filter_query> is relatively small*.
 
 - The results of the KNN query will always be accurate in this mode, even if the underlying vector index algorithm is an approximate one.
 
