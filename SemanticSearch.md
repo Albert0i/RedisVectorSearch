@@ -47,7 +47,7 @@ Modeling the two sentences based on a word [frequency model](https://en.wikipedi
 
 #### III. Working with vector embeddings
 
-Vectors represent unstructured data and are essentially lists of decimal numbers. When vectors are used in semantic search, we refer to **vector embeddings**. The term "embedding" helps reflect the transformation of data to a lower-dimensional space while preserving the features of the original data, so the vector embeds the structures and relationships of the original data (which may be the semantic meaning of a paragraph or the attributes like colors, angles, lines, and shapes in a picture, and so on).
+Vectors represent unstructured data and are essentially lists of decimal numbers. When vectors are used in semantic search, we refer to **vector embeddings**. The term "embedding" helps reflect the transformation of data to a lower-dimensional space while preserving the features of the original data, so the vector *embeds* the structures and relationships of the original data (which may be the semantic meaning of a paragraph or the attributes like colors, angles, lines, and shapes in a picture, and so on).
 
 ![alt Lorem](img/Lorem.JPG)
 
@@ -61,7 +61,7 @@ Embeddings can be generated using several heterogeneous techniques that facilita
 
 The availability of pre-trained machine learning models has helped spread and standardize the approach. In practice, many machine learning projects use pre-trained embedding models as a starting point, and benchmarking and fine-tuning them for the specific task helps introduce semantic search into a service.
 
-When a machine learning model generates vectors, they embed the distinctive features of data into floating point numbers of fixed size in a compact and dense representation and translate the human-perceived semantic similarity to the vector space. The semantic similarity of two objects (two texts expressing the same concepts and overall meaning or two similar pictures) translates to the "numerical similarity" of two vectors, which is calculated as the distance between vectors, a simple mathematical operation.
+When a machine learning model generates vectors, they embed the distinctive features of data into floating point numbers of fixed size in a compact and dense representation and *translate the human-perceived semantic similarity to the vector space*. The semantic similarity of two objects (two texts expressing the same concepts and overall meaning or two similar pictures) translates to the "numerical similarity" of two vectors, which is calculated as the **distance between vectors**, a simple mathematical operation.
 
 
 #### IV. Lab Guide | Using embedding models
