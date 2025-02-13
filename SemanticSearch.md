@@ -42,7 +42,7 @@ However, representing sentences and longer texts using this model based on the r
 
 - "The dog chased the cat"
 
-Modeling the two sentences based on a word frequency model does not retain the meaning of the sentence... who chases whom? To resolve the problem and be able to represent the semantics of unstructured data, as in this example, machine learning models come to the rescue. Machine learning models are, in a very simplified way, functions that accept unstructured data as input and produce numerical representations. Deep learning techniques develop such models and can capture the input object's unique data features. The next unit introduces the embedding models and shows how to obtain vectors in a few lines of code.
+Modeling the two sentences based on a word [frequency model](https://en.wikipedia.org/wiki/Bag-of-words_model) does not retain the meaning of the sentence... who chases whom? To resolve the problem and be able to represent the semantics of unstructured data, as in this example, **machine learning models** come to the rescue. Machine learning models are, in a very simplified way, functions that accept unstructured data as input and produce numerical representations. Deep learning techniques develop such models and can capture the input object's unique data features. The next unit introduces the embedding models and shows how to obtain vectors in a few lines of code.
 
 
 #### III. Working with vector embeddings
