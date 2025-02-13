@@ -196,7 +196,8 @@ Congratulations! You are now able to calculate the similarity of vectors to retr
 
 - Vectorize the documents in a two-dimensional vector space (　)
 
-- Define a distance that will be used to compute the similarity of the vectors (　)
+- Define a distance that will be used to compute the similarity of the vectors ( &#10003;
+ )
 
 - Sort the vectors based on their length (　)
 
@@ -208,7 +209,8 @@ Congratulations! You are now able to calculate the similarity of vectors to retr
 
 - The Euclidean distance between vectors (　)
 
-- The angle between vectors (　)
+- The angle between vectors ( &#10003;
+ )
 
 - The internal product of vectors (　)
 
