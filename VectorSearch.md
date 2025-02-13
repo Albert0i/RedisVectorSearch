@@ -57,11 +57,42 @@ where a⋅b is the dot product of the two vectors and ||a|| is the Euclidean nor
 
 If you normalize the vectors, cosine similarity and internal product give the same result, which makes the intuition behind using it as a metric very similar to internal product, but the cosine distance should be chosen when magnitude is not relevant.
 
-> *Normalised vectors are vectors with a magnitude of 1, so to normalise a vector means to set its magnitude to one, but keep it's direction. This is done by dividing each of the vector's components by its magnitude.
+> *Normalised vectors are vectors with a magnitude of 1, so to normalise a vector means to set its magnitude to one, but keep it's direction. This is done by dividing each of the vector's components by its magnitude*.
+
 
 #### II. Vector search in practice
 
+Vector search is a key function that can be performed between *pairs of vectors*.
 
+- It is the process of finding data points that are similar to a given query vector in a set of vectors.
+
+- Popular vector search uses include recommendation systems, image and video search, natural language processing, and anomaly detection.
+
+- For example, if you build a recommendation system, you can use vector search to find (and suggest) products that are similar to a product in which a user previously showed interest.
+
+![alt Vector search in practice](img/Vector-search-in-practice.JPG)
+
+**Vector search in practice**
+
+Calculating the distance between vectors is a trivial operation using some math. Let's consider a simple example using sentences.
+
+1. The following example in the cartesian plane defines three sentences
+
+2. First, we calculate the vector embedding corresponding to each of the three sentences and store them
+
+3. We define the test sentence "That is a happy person" and calculate the corresponding vector embedding
+
+4. Finally, we compute the distance between the embedding of the test sentence and the three stored vector embeddings
+Here's a graphical representation of the embeddings in a bi-dimensional vector space.
+
+Here's a graphical representation of the embeddings in a bi-dimensional vector space.
+
+![alt Vector search in practice 2](img/Vector-search-in-practice-2.JPG)
+
+Let's now introduce the most popular distances that can be used in the comparison between the test sentence and the stored vectors.
+
+
+#### III. Using the right distance
 
 
 ### EOF (2025/02/15)
