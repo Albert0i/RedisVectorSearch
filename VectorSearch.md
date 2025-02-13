@@ -94,5 +94,38 @@ Let's now introduce the most popular distances that can be used in the compariso
 
 #### III. Using the right distance
 
+Vector search is based on determining how similar or dissimilar two vectors are. To do this consistently, some quantifiable and objective score must be obtained. These scores are called Distance Metrics. There's more than one method to determine the similarity of two vectors; thus, we can consider multiple distance metrics. These are not just different means to the same result: different distances measure different things, such as the length of the vector representing the difference, or the angle between the two vectors.
+
+**Euclidian distance**
+
+**Internal product**
+
+**Cosine similarity**
+
+
+#### IV. Lab Guide | Compute vector similarity
+
+#### V. Quiz | Introduction to Vector
+
+1. What operation must be executed in preparation for performing vector search?
+
+- Vectorize the documents in a two-dimensional vector space (　)
+
+- Define a distance that will be used to compute the similarity of the vectors (　)
+
+- Sort the vectors based on their length (　)
+
+- Create a full-text search index and perform data indexation (　)
+
+2. What does cosine similarity primarily focus on in vector search?
+
+- The magnitude of vectors (　)
+
+- The Euclidean distance between vectors (　)
+
+- The angle between vectors (　)
+
+- The internal product of vectors (　)
+
 
 ### EOF (2025/02/15)
