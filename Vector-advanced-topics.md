@@ -254,6 +254,36 @@ The execution of this example achieves the same recognition rate. You will now h
 
 #### III. Lab Guide | Implementing a face recognition system
 
+We have provided you with two Jupyter notebooks, one modeling the training set with Hashes and the other using JSON documents. Follow this procedure to create and activate your Python virtual environment:
+
+```
+python -m venv vssvenv
+source vssvenv/bin/activate
+```
+
+Once done, install the required modules defined by the requirements.txt requirements file, available under /src/jupyter
+
+```
+pip install -r requirements.txt
+```
+
+Ensure that you have database host, port, username and password for your Redis Cloud database at hand (alternatively, a Redis Stack instance is running). Complete the configuration of the environment by setting the environment variable that configures your Redis instance (default is localhost on port 6379).
+
+1. Connect to the database using RedisInsight or redis-cli and flush the database with FLUSHALL.
+2. Configure the environment variable to connect export REDIS_URL=redis://user:password@host:port
+
+Now, you can start the notebooks, execute all the cells, and check the recognition rate presented once all the tests are performed. Execute the following notebook for the example using the Hash data structure:
+
+```
+jupyter notebook faces.ipynb
+```
+
+And the following one to use the JSON data structure:
+
+```
+jupyter notebook faces_json.ipynb
+```
+
 
 #### IV. Large language models
 
