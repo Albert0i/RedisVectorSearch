@@ -287,8 +287,47 @@ jupyter notebook faces_json.ipynb
 
 #### IV. Large language models
 
+The rise of conversational Artificial Intelligence (AI) has taken the world by storm in the early months of 2023, thanks to the advent of powerful Large Language Models (LLMs) such as ChatGPT [latest releases](https://openai.com/research/gpt-4). ChatGPT versions 3.5 and 4, presented around March 2023, have surprised users with unprecedented quality answers, the ability to solve complex and structured problems, produce ideas, organize and edit texts, and generate source code, all of this using natural and conversational questions in the desired language have impressed the world in a wide variety of scenarios and use cases. While such a paradigm shift has been driven by the [ChatGPT assistant](https://chat.openai.com/) available for free to the public, the possibility of turning the usual applications and services into smart assistants has been accelerated by pay-as-you-go service models by OpenAI and other providers, democratizing the access to such advanced capabilities.
+
+Running LLMs on-premise is hard. Besides the massive amount of resources to hold billions of parameters in memory required to generate an almost real-time answer to a question (which is referred to as prompt), designing such systems for scalability and elasticity requires a non-negligible effort. Making such services available to developers for rapid prototyping is another factor contributing to the vast adoption of LLMs and the surge of many heterogeneous services in different areas where a user requires dedicated and customized attention, such as recommendations, assistance, financial advisory, troubleshooting, and more.
+
+Finally, factors that have influenced the rapid ascent of conversational AI services and have led to the release of increasingly advanced algorithms are massive datasets available for training (the Internet), computational power and efficiency provided by modern Graphical Processing Units (GPUs), and the advance of distributed systems and architectures. Training such systems is extremely time-consuming and resource-intensive. For example, training ChatGPT 4 took over a month and dozens of GPUs, which led to freezing the training set in time and cutting off forthcoming knowledge. This intrinsic feature of LLMs poses a constraint on several kinds of applications: working with fresh data is not possible when integrating an LLM technology into a service. Given this background, new techniques are becoming popular to circumvent such limitations and enable LLMs to assist the user even in the case of recent updates to the corpus of knowledge and provide answers when the model was not trained on specific content.
+
+**The challenge of outdated information**
+
+If you have ever asked ChatGPT the following question:
+
+```
+❓ What is the newest data ChatGPT is trained on?
+```
+
+You may already have realized that ChatGPT training happened at some point in the past, which means that the newest data may already be quite in the past (and the same is true for other LLMs).
+
+```
+❗ My training is based on the GPT-3.5 architecture, and my knowledge is current up until September 2021. Therefore, any events, information, or developments that have occurred after that date are outside my training data, and I may not have the most up-to-date information on them.
+```
+
+This is why it is impossible to answer questions like:
+
+```
+❓ What are the relevant facts of 2023?❗ I apologize for any inconvenience, but as of my last knowledge update in September 2021, I do not have access to information or events that have occurred in 2023 or beyond. My training data only goes up to that point, and I am not able to browse the internet or access real-time information. To get information about events and facts relevant to 2023, I would recommend checking reliable news sources, websites, or databases that provide up-to-date information on current events and developments.
+```
+
+Retraining LLMs to include the latest and fresh knowledge is expensive and not viable in the immediate term, even in the case of resorting to a custom LLM trained on-premise, so two principal methods are gaining traction to overcome this limitation and enable the latest information in the system: fine-tuning and Retrieval Augmented Generation (RAG).
+
+**Redis, the Vector Database for conversational AI use cases**
+
+Redis, as a high-performance, in-memory data platform, can play a pivotal role in addressing the challenges of LLM-based use cases. Here's how:
+
+- **Context Retrieval for RAG**. Pairing Redis Enterprise with LLMs enables these models to access external contextual knowledge. This contextual knowledge is crucial for providing accurate and context-aware responses, preventing the model from generating incorrect or 'hallucinated' answers. By storing and indexing vectors that model unstructured data, Redis Enterprise ensures that the LLM can retrieve relevant information quickly and effectively, enhancing its response quality.
+
+- **LLM Conversation Memory**. Redis Enterprise allows the persistence of all conversation history (memories) as embeddings in a vector database to improve model quality and personalization. When a conversational agent interacts with the LLM, it can check for relevant memories to aid or personalize the LLM's behavior. This feature enables seamless topic transitions during conversations and reduces misunderstandings.
+
+- **Semantic Caching**. LLM completions can be computationally expensive. Redis Enterprise helps reduce the overall costs of ML-powered applications by caching input prompts and evaluating cache hits based on semantic similarity using vector search. This caching mechanism ensures that frequently requested information is readily available, optimizing response times and resource utilization.
+
 
 #### V. Fine-tuning and Retrieval Augmented Generation (RAG)
+
 
 
 #### VI. LLM conversation memory
