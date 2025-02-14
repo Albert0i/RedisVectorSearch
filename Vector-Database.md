@@ -218,66 +218,23 @@ The matching sentence is the expected result. You can learn more about range que
 
 #### IX. Lab Guide | Vector search with hybrid queries
 
+Vector search can be combined with the other querying mechanisms (including range queries), giving us the possibility to run **hybrid queries**. For example, we can modify the query in the previous example as follows to indicate that we want to filter by category. Using the TAG field specified for the genre:
+
+```
+q = Query("@genre:{pets}=>[KNN 2 @embedding $vec AS score]").return_field("score").return_field("content").dialect(2)
+```
+
+The result is returned correctly.
+
+```
+Result{1 total, docs: [Document {'id': 'doc:2', 'payload': None, 'score': '0.305422723293', 'content': 'That is a happy dog'}]}
+```
+
+You can learn more about hybrid queries in the [documentation](https://redis.io/docs/interact/search-and-query/advanced-concepts/vectors/#hybrid-queries).
 
 #### X. Quiz | Redis as a Vector Database 
 
 
-In this activity you will run a simple example to model the sentences considered before:
-
-- "That is a very happy person"
-
-- "That is a happy dog"
-
-- "Today is a sunny day"
-
-Then, you will test the similarity of the sentence "That is a happy person" to the three sentences. You can create a Python environment and install the required libraries to run the example as follows:
-
-python -m venv redisvenv source ./redisvenv/bin/activate pip install numpy pip install sentence_transformers
-
-Once your virtual environment is configured, you can move on to the rest of the tasks.
-
-1. Download the code provided in the file [cosine_distance.py](https://github.com/redislabs-training/ru402/blob/main/courseware/activities/section_2/cosine_distance.py).
-
-2. Study the code example. In particular, focus on the vector embedding generation and the algorithm that computes cosine similarity in the function cosine_similarity(a, b)
-
-3. Execute the example. The first time the sample is executed, the requested embedding model all-MiniLM-L6-v2 is downloaded and stored. Wait patiently, this can take a few seconds.
-
-Running this example returns the following output:
-
-Query: That is a happy person That is a very happy person  -> similarity score =  0.9429151 That is a happy dog  -> similarity score =  0.6945774 Today is a sunny day  -> similarity score =  0.256876
-
-We could have expected that the sentences "That is a happy person" and "That is a very happy person" represent the pair having the highest similarity score. In the example, we are comparing the angles between pairs of vectors in a 384-dimensional vector space using the cosine distance.
-
-![alt Lab Guide](img/Lab-Guide.JPG)
-
-The closest the angle between the two vectors to zero, the closest is the cosine to one, which indicates a higher similarity between the two sentences.
-
-Congratulations! You are now able to calculate the similarity of vectors to retrieve semantically relevant results!
 
 
-#### V. Quiz | Introduction to Vector Search
-
-1. What operation must be executed in preparation for performing vector search?
-
-- Vectorize the documents in a two-dimensional vector space (　)
-
-- Define a distance that will be used to compute the similarity of the vectors ( &#10003;
- )
-
-- Sort the vectors based on their length (　)
-
-- Create a full-text search index and perform data indexation (　)
-
-2. What does cosine similarity primarily focus on in vector search?
-
-- The magnitude of vectors (　)
-
-- The Euclidean distance between vectors (　)
-
-- The angle between vectors ( &#10003;
- )
-
-- The internal product of vectors (　)
-
-
-### EOF (2025/02/21)
+### EOF (2025/02/15)
