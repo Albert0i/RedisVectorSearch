@@ -1,12 +1,14 @@
 ### [Working with node-redis](https://university.redis.io/course/eavvi5k9jdggnb/submodule/weyvds6cp5yidi/)
 
+
 We've provided you with a small example program that uses the [node-redis](https://github.com/redis/node-redis) client for Node.js to store and manipulate data in Redis.
 
 The code is located in the [src/nodejs/](https://github.com/redislabs-training/ru402/tree/main/src/nodejs) folder in the course GitHub repository. You should have already cloned this repository to your machine as part of the initial course setup step.
 
 Follow the instructions in the [README.md](https://github.com/redislabs-training/ru402/blob/main/src/nodejs/README.md) file if you'd like to run the code in your local environment.
 
-**Code Walkthrough**
+
+#### I. **Code Walkthrough**
 
 The example is a JavaScript version of the simple vector search example already introduced along the course, where we:
 
@@ -15,7 +17,8 @@ The example is a JavaScript version of the simple vector search example already 
 3. Create vectors from the three sentences using the model, and store them
 4. Consider a sample sentence, calculate the embedding, and perform VSS
 
-**Embedding model creation**
+
+#### II. **Embedding model creation**
 
 The embedding model we will be using in this example proceeds from the [Transformers.js](https://www.npmjs.com/package/@xenova/transformers) library. The dependencies can be added to the project as follows:
 
@@ -39,7 +42,8 @@ async function generateSentenceEmbeddings(sentence) {
 }
 ```
 
-**Index creation**
+
+#### III. **Index creation**
 
 In this example, we are modelling simple documents having this structure:
 
@@ -93,7 +97,8 @@ async function createIndex() {
 }
 ```
 
-**Vector embedding generation**
+
+#### IV. **Vector embedding generation**
 
 Vector embeddings can be created using the model created before. Note that embeddings are stored in Hashes using the binary blob format used in the example.
 
@@ -107,7 +112,8 @@ client.hSet('doc:1', sentence1);
 
 > The function float32Buffer, defined in the example, converts the array of floats to a binary blob.
 
-**Perform the search**
+
+#### V. **Perform the search**
 
 Finally, considering the test sentence "That is a happy person", we perform the KNN search and return the score of the search and the content of the best matches. In this example, we are returning the three documents so you can analyze the score.
 
@@ -133,5 +139,6 @@ async function vss() {
     }
 }
 ```
+
 
 ### EOF (2025/02/15)
