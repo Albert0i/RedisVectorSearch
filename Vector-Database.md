@@ -93,6 +93,30 @@ Refer to the [documentation](https://redis.io/docs/interact/search-and-query/adv
 
 #### V. Working with JSON documents
 
+When using the JSON type to store the vectors, differently from the hash, vectors must be stored as **arrays of floats** instead of binary blobs. In this Python code sample, the numPy library converts the vector embedding to a list and stores it with the original text and the desired data.
+
+```
+vector = embedding.tolist()
+doc = {
+    'embedding': vector,
+    'genre': 'technical',
+    'content': text
+}
+r.json().set("doc:1", '$', doc)
+```
+
+Redis long-time users are familiar with the Hash data type and may opt for it based on its simplicity, speed, and reduced memory footprint. Users that have experience with document stores, instead, may privilege the JSON format for better interoperability.
+
+> Note that one JSON document can store and index multiple vector embeddings. Certain data models may benefit from this feature for specific data representations and document searches. For example, if a large document is split into several chunks, these can all be stored under the same JSON document together with their associated representation as a vector.
+
+Indexing the JSON document can be achieved similarly to the hash:
+
+```
+FT.CREATE doc_idx ON JSON PREFIX 1 doc: SCHEMA $.content as content TEXT $.genre AS genre TAG $.embedding VECTOR HNSW 6 TYPE FLOAT32 DIM 384 DISTANCE_METRIC COSINE
+```
+
+Once the data is inserted and the index created using the desired data type, searching for similarity is straightforward.
+
 #### VI. Lab Guide | Searching vectors
 
 #### VII. Data types, distances and indexing methods
