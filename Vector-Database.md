@@ -119,6 +119,40 @@ Once the data is inserted and the index created using the desired data type, sea
 
 #### VI. Lab Guide | Searching vectors
 
+We know how to generate vector embeddings and create the corresponding index on the vector field. Let's go back to the former example when we introduced the concept of cosine similarity, and let's run the example to store the sentences once they are vectorized and search them.
+
+You can create a Python environment and install the required libraries to run the example as follows:
+
+```
+python -m venv redisvenv
+source ./redisvenv/bin/activate
+
+pip install numpy
+pip install sentence_transformers
+pip install redis
+```
+
+Once your virtual environment is configured, you can move on to the rest of the tasks.
+
+1. Download the code provided in the file [vector_search.py](https://github.com/redislabs-training/ru402/blob/main/courseware/activities/section_3/vector_search.py).
+
+2. Study the code example. In particular, focus on the conversion of the embedding to binary blob and how it is stored in the hash data structure.
+
+3. Configure your Redis Cloud (or local instance) database host, port, username and password in the file.
+
+4. Connect to the database using RedisInsight or redis-cli and flush the database with FLUSHALL.
+
+5. Execute the example. The first time the sample is executed, the requested embedding model all-MiniLM-L6-v2 is downloaded and stored. Wait patiently, this can take a few seconds.
+
+The former script will print on the terminal the two closest results using the [k-nearest neighbors algorithm (KNN)](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm):
+
+```
+Result{2 total, docs: [Document {'id': 'doc:1', 'payload': None, 'score': '0.0570845603943', 'content': 'That is a very happy person'}, Document {'id': 'doc:2', 'payload': None, 'score': '0.305422723293', 'content': 'That is a happy dog'}]}
+```
+Expectedly, the best match is "That is a very happy person", having a shorter distance from the test sentence "That is a happy person".
+
+> Note that the cosine distance is complementary to cosine similarity and can be obtained by subtracting the value of the cosine similarity from 1.
+
 #### VII. Data types, distances and indexing methods
 
 #### VIII. Lab Guide | Vector search with range queries
