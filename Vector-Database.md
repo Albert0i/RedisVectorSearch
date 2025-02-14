@@ -245,19 +245,19 @@ You can learn more about hybrid queries in the [documentation](https://redis.io/
 
 1. What statements are correct about Redis Stack unstructured data modelling?
 
-- It is possible to model unstructured data using strings [　]
+- It is possible to model unstructured data using strings [&#10003;]
 
 - Vectors can be indexed when stored as strings, hashes, and JSON data types [　]
 
 - Redis can generate vector embeddings from unstructured data [　]
 
-- Vectors can be indexed using the VECTOR data type [　]
+- Vectors can be indexed using the VECTOR data type [&#10003;]
 
 - Vectors can be stored in a JSON document in binary blob formats [　]
 
 2. Why would you privilege cosine similarity over another distance? (　)
 
-- When the magnitude of the vectors does not matter (　)
+- When the magnitude of the vectors does not matter (&#10003;)
 
 - You are not interested in the angle between the vectors (　)
 
@@ -269,7 +269,7 @@ You can learn more about hybrid queries in the [documentation](https://redis.io/
 
 - It uses the the FLAT indexing method (　)
 
-- HNSW sacrifices accuracy for significant performance improvements (　)
+- HNSW sacrifices accuracy for significant performance improvements (&#10003;)
 
 - It compares the test vector to all vectors in a sequential manner (　)
 
