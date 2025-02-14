@@ -155,6 +155,50 @@ Expectedly, the best match is "That is a very happy person", having a shorter di
 
 #### VII. Data types, distances and indexing methods
 
+Using Redis as a Vector Database, you have several options to make at design time that will influence your data model, the correctness of the results, and the overall performance of your application. The three main aspects you will evaluate in this unit are:
+
+- The data type
+- The distance
+- The indexing methods
+
+Let's cover the main points to consider when designing your application.
+
+**Choosing the right data type**
+
+Redis can store and manage vectors in Hash or JSON data types, as discussed. Besides the intrinsic structural differences between the Hash and the JSON, let's make some considerations.
+
+First, the JSON data type supports the same features as the Hash data type when performing VSS. There are some slight differences, though, to take into account when working with a determined type.
+
+- **Searching**
+1. When using **Hashes**, storing and searching vectors requires using the binary blob format.
+2. For **JSON documents**, formats used for storing and searching are asymmetric: vectors must be stored as lists rather than binary blobs (model.encode(text).astype(np.float32).tolist()), but to perform VSS, JSON requires the binary blob format model.encode(text).astype(np.float32).tobytes()
+- **Indexing**. The Hash can index a single vector, defined by the FT.CREATE command. The JSON format, instead, can store and have multiple vectors indexed, identified by a JSONPath expression
+- **Footprint**. JSON has a larger memory footprint compared to the Hash
+
+**Choosing the right distance**
+
+We mentioned that similarity between vectors can be measured through different methods; currently, we support three among the most popular: Euclidean distance, Internal product, and Cosine similarity.
+
+- **L2**. The Euclidean distance is the default distance metric used by many algorithms, and it generally gives good results. Conceptually, it should be used when we compare observations whose features are continuous: numeric variables like height, weight, or salaries, for example, although it should be noted that it works best with low-dimensional data and where the magnitude of the vectors is important to be measured.
+
+- **COSINE**. Cosine similarity considers the cosine of the angle formed by two vectors (when the angle is close to 0, the cosine tends to 1, representing the maximum similarity). The cosine similarity does not account for the magnitude of the vectors being compared. The cosine distance is complementary to cosine similarity (obtained by subtracting the cosine similarity value from 1). This distance is appropriate when the magnitude of the vectors is not important in the description of the unstructured data
+
+- **IP**. The inner product looks at both the angle between the vectors and their magnitude. Note that this distance is equivalent to cosine similarity if vectors are normalized.
+
+Depending on the model used to represent the unstructured data, one distance may fit better than the others.
+
+**Choosing the indexing method**
+
+When a new vector is added to Redis, it can be indexed by one of the two indexing methods:
+
+Flat index (FLAT)
+
+You can use the FLAT indexing method for smaller datasets. This method compares the test vector to all the vectors in the index, one by one. This is a more accurate but much slower and compute-intensive approach
+
+Hierarchical Navigable Small World graphs (HNSW)
+
+For more extensive datasets, it becomes difficult to compare the test vector to every single vector in the index, so a probabilistic approach is adopted through the HNSW algorithm. This method provides speedy search results. This approach trades some accuracy for significant performance improvements.
+
 #### VIII. Lab Guide | Vector search with range queries
 
 #### IX. Lab Guide | Vector search with hybrid queries
