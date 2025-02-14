@@ -3,6 +3,124 @@
 
 #### I. Implementing a text-based recommender system
 
+The idea behind a recommender system using vector search is to transform the relevant information (title, description, date of creation, authors, and more) into the corresponding vector embedding and store it in the same document as the original data. Then, when visualizing an entry (an article from a digital newspaper or any other media from the web), it is possible to leverage the stored vector embedding for that entry and feed into a vector search operation to semantically similar content.
+
+Let's consider the following example.
+
+> If you want to run the example first, jump to the bottom of this article to learn how to do so.
+
+**Writing a recommender system**
+
+- We will use the dataset of books available under [/data/books](https://github.com/redislabs-training/ru402/tree/main/data/books)
+- The source code of the example is available as the Jupyter notebook [books.ipynb](https://github.com/redislabs-training/ru402/blob/main/src/jupyter/books.ipynb)
+
+You can refer to the source code for the details to load the books and generate the embeddings. Books will be stored in the following JSON format and using the Redis Stack JSON data type.
+
+```
+    {
+      "author": "Martha Wells",
+      "id": "43",
+      "description": "My risk-assessment module predicts a 53 percent chance of a human-on-human massacre before the end of the contract." A short story published in Wired.com magazine on December 17, 2018.",
+      "editions": [
+        "english"
+      ],
+      "genres": [
+        "adult",
+        "artificial intelligence",
+        "fantasy",
+        "fiction",
+        "humor",
+        "science fiction",
+        "science fiction (dystopia)",
+        "short stories",
+        "space"
+      ],
+      "inventory": [
+        {
+          "status": "available",
+          "stock_id": "43_1"
+        }
+      ],
+      "metrics": {
+        "rating_votes": 274,
+        "score": 4.05
+      },
+      "pages": 369,
+      "title": "Compulsory",
+      "url": "https://www.goodreads.com/book/show/56033969-compulsory",
+      "year_published": 2018
+    }
+```
+
+The relevant section in the example is the implementation of semantic search, delivered by this snippet of code:
+
+```
+def get_recommendation(key):
+embedding = r.json().get(key)
+embedding_as_blob = np.array(embedding['embedding'], dtype=np.float32).tobytes()
+q = Query("*=>[KNN 5 @embedding $vec AS score]").return_field("$.title").sort_by("score", asc=True).dialect(2).paging(1, 5)
+res = r.ft("books_idx").search(q, query_params={"vec": embedding_as_blob})
+return res
+```
+
+The previous snippet does the following:
+
+- Given a document, it extracts the vector embedding for that document from the JSON entry
+
+- It converts the vector embedding, stored as an array of floats, to a binary array
+
+- It executes Vector Similarity Search to find similarities and get the most similar books
+
+- It pages the results, excluding the first result. Hence, paging starts from 1 rather than 0. In the first position, we would find the entry itself, having a distance from the test vector equal to zero
+
+Launching the execution of the example for the two known movies: ["It"](https://www.goodreads.com/book/show/830502.It) and ["Transformers: The Ultimate Guide"](https://www.goodreads.com/book/show/390032.Transformers) :
+
+
+```
+print(get_recommendation('book:26415'))
+print(get_recommendation('book:9'))
+```
+
+We obtain the related recommendations:
+
+```
+Result{5 total, docs: [Document {'id': 'book:3008', 'payload': None, '$.title': 'Wayward'}, Document {'id': 'book:2706', 'payload': None, '$.title': 'Before the Devil Breaks You'}, Document {'id': 'book:23187', 'payload': None, '$.title': 'Neverwhere'}, Document {'id': 'book:942', 'payload': None, '$.title': 'The Dead'}]}
+
+Result{5 total, docs: [Document {'id': 'book:15', 'payload': None, '$.title': 'Transformers Volume 1: For All Mankind'}, Document {'id': 'book:3', 'payload': None, '$.title': 'Transformers: All Fall Down'}, Document {'id': 'book:110', 'payload': None, '$.title': 'Transformers: Exodus: The Official History of the War for Cybertron (Transformers'}, Document {'id': 'book:2', 'payload': None, '$.title': 'Transformers Generation One, Vol. 1'}]}
+```
+
+**Performing range search**
+
+In this example, we executed a KNN search and retrieved the documents with the closest distance from the document being considered. Alternatively, we can perform a vector search range search to retrieve results having the desired distance from the sample vector embedding. The related code is:
+
+```
+def get_recommendation_by_range(key):
+embedding = r.json().get(key)
+embedding_as_blob = np.array(embedding['embedding'], dtype=np.float32).tobytes()
+q = Query("@embedding:[VECTOR_RANGE $radius $vec]=>{$YIELD_DISTANCE_AS: score}") \
+  .return_fields("title") \
+  .sort_by("score", asc=True) \
+  .paging(1, 5) \
+  .dialect(2)
+
+# Find all vectors within a radius from the query vector
+query_params = {
+  "radius": 3,
+  "vec": embedding_as_blob
+}
+
+res = r.ft("books_idx").search(q, query_params)
+return res
+```
+
+Computing this vector search range search returns similar results.
+
+```
+Result{1486 total, docs: [Document {'id': 'book:3008', 'payload': None, 'title': 'Wayward'}, Document {'id': 'book:2706', 'payload': None, 'title': 'Before the Devil Breaks You'}, Document {'id': 'book:23187', 'payload': None, 'title': 'Neverwhere'}, Document {'id': 'book:942', 'payload': None, 'title': 'The Dead'}, Document {'id': 'book:519', 'payload': None, 'title': 'The Last Days of Magic'}]}
+
+Result{1486 total, docs: [Document {'id': 'book:15', 'payload': None, 'title': 'Transformers Volume 1: For All Mankind'}, Document {'id': 'book:3', 'payload': None, 'title': 'Transformers: All Fall Down'}, Document {'id': 'book:110', 'payload': None, 'title': 'Transformers: Exodus: The Official History of the War for Cybertron (Transformers'}, Document {'id': 'book:2', 'payload': None, 'title': 'Transformers Generation One, Vol. 1'}, document {'id': 'book:37', 'payload': None, 'title': 'How to Build a Robot Army: Tips on Defending Planet Earth Against Alien Invaders, Ninjas, and Zombies'}]}
+```
+
 
 #### II. Implementing a face recognition system
 
