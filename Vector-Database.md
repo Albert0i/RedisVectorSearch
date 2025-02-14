@@ -75,7 +75,9 @@ r.hset('doc:1', mapping = {'embedding': blob,
 
 Hash documents can be indexed with FT.CREATE using the VECTOR index type. We can also index other fields in the same index definition, like the TEXT and TAG fields in the following instructions. Indexing several fields in the same index enables hybrid searches, which we'll show later.
 
+```
 FT.CREATE doc_idx ON HASH PREFIX 1 doc: SCHEMA content AS content TEXT genre AS genre TAG embedding VECTOR HNSW 6 TYPE FLOAT32 DIM 384 DISTANCE_METRIC COSINE
+```
 
 Note how we have specified:
 
