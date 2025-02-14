@@ -15,35 +15,19 @@ In the following units, we will learn how Redis Stack is designed to perform vec
 
 #### II. Modeling vectors in Redis
 
-Vector search is a key function that can be performed between *pairs of vectors*.
+All the Redis database flavors can store, index, and search vectors. This means that you can work with vectors using the [Redis Stack](https://redis.io/docs/about/about-stack/) distribution in your development environment and also for functional testing. Redis Enterprise and Redis Enterprise Cloud are built upon the Redis Stack capabilities, but they also offer a robust set of features to work efficiently with vectors at scale.
 
-- It is the process of finding data points that are similar to a given query vector in a set of vectors.
+![alt Modeling vectors in Redis](img/Modeling-vectors-in-Redis.JPG)
 
-- Popular vector search uses include recommendation systems, image and video search, natural language processing, and anomaly detection.
+First, it is important to highlight that before the native support for vectors was introduced in Redis Stack Server 6.2.2-v1 in 2022, vectors would be stored in Redis as a string, so serializing the vector and storing it in the desired data structure. An example using the String:
 
-- For example, if you build a recommendation system, you can use vector search to find (and suggest) products that are similar to a product in which a user previously showed interest.
+```
+SET vec "0.00555776,0.06124274,-0.05503812,-0.08395513,-0.09052192,-0.01091553,-0.06539601,0.01099653,-0.07732834,0.0536432"
+```
 
-![alt Vector search in practice](img/Vector-search-in-practice.JPG)
+Redis can store any arbitrary object once serialization and deserialization routines are available. A vector is just another object that Redis can store when serialized to the String type. However, Redis has no awareness of the intrinsic nature of the stored object and does not offer any feature to search through the space of vectors.
 
-**Vector search in practice**
-
-Calculating the distance between vectors is a trivial operation using some math. Let's consider a simple example using sentences.
-
-1. The following example in the cartesian plane defines three sentences
-
-2. First, we calculate the vector embedding corresponding to each of the three sentences and store them
-
-3. We define the test sentence "That is a happy person" and calculate the corresponding vector embedding
-
-4. Finally, we compute the distance between the embedding of the test sentence and the three stored vector embeddings
-Here's a graphical representation of the embeddings in a bi-dimensional vector space.
-
-Here's a graphical representation of the embeddings in a bi-dimensional vector space.
-
-![alt Vector search in practice 2](img/Vector-search-in-practice-2.JPG)
-
-Let's now introduce the most popular distances that can be used in the comparison between the test sentence and the stored vectors.
-
+Since Redis Stack Server 6.2.2-v1, vectors can be stored as Hash or JSON documents, providing flexibility in how data is structured and accessed. Multiple indexing methods are supported, including FLAT and HNSW, enabling users to choose the most suitable approach for their specific use cases. Users can privilege precision over speed with the FLAT method or ensure high throughput with a little compromise on accuracy using HNSW. Additionally, Redis offers support for various distance metrics such as L2, IP, and COSINE, further enhancing the precision and efficiency of vector searches for specific types of embeddings. With these features, Redis becomes a flexible solution for businesses seeking to harness the power of vector data in diverse applications, from recommendation engines to similarity search tasks.
 
 #### III. Storing vectors: the HASH and JSON data types
 
