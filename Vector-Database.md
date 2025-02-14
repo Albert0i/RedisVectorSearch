@@ -45,6 +45,50 @@ Next, we will store the vector embedding using the desired data structure and le
 
 #### IV. Working with hashes
 
+The vector embedding we have just generated can be stored in a Hash as a **binary blob** within the document itself, together with the rest of the fields. This means that if our document is structured as follows:
+
+```
+{
+    "content": "Understanding vector search is easy, but understanding all the mathematics behind a vector is not!",
+    "genre": "technical"
+}
+```
+
+then we will include the vector embedding in the document itself:
+
+```
+{
+    "content": "Understanding vector search is easy, but understanding all the mathematics behind a vector is not!",
+    "genre": "technical",
+    "embedding": "..."
+}
+```
+
+In the following Python code sample, the utility astype from the [numPy](https://numpy.org/) library for scientific computing is used: it casts the vector to the desired binary blob format, required by Redis for indexing purposes.
+
+```
+blob = embedding.astype(np.float32).tobytes()
+r.hset('doc:1', mapping = {'embedding': blob,
+                           'genre': 'technical',
+                           'content': text})
+```
+
+Hash documents can be indexed with FT.CREATE using the VECTOR index type. We can also index other fields in the same index definition, like the TEXT and TAG fields in the following instructions. Indexing several fields in the same index enables hybrid searches, which we'll show later.
+
+FT.CREATE doc_idx ON HASH PREFIX 1 doc: SCHEMA content AS content TEXT genre AS genre TAG embedding VECTOR HNSW 6 TYPE FLOAT32 DIM 384 DISTANCE_METRIC COSINE
+
+Note how we have specified:
+
+- the dimension of the vectors, set by the specific embedding model [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
+
+- the indexing method, HNSW
+
+- the vector type, FLOAT32 in the example
+
+- the distance, COSINE in the example
+
+Refer to the [documentation](https://redis.io/docs/interact/search-and-query/advanced-concepts/vectors/) to learn more about these options.
+
 #### V. Working with JSON documents
 
 #### VI. Lab Guide | Searching vectors
