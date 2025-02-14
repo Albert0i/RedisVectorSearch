@@ -124,6 +124,133 @@ Result{1486 total, docs: [Document {'id': 'book:15', 'payload': None, 'title': '
 
 #### II. Implementing a face recognition system
 
+Implementing a visual recommender system using vector search follows the same logic as the textual recommender systems. Once the image is modelled as a vector embedding, the implementation is very similar: the main difference resides in the embedding model used to generate the vector from the image file.
+
+In this unit, we will revisit the same concepts learned so far, but rather than text, we will work with images and guide you through implementing a face recognition system.
+
+> If you want to run the example first, jump to the activity to learn how to do so.
+
+**Develop your own face recognition system**
+
+This example delves into modelling and running classification algorithms for human face recognition. While face recognition systems are developed as multi-stage pipelines, including motion detection, image preprocessing, face detection and modeling, classification, and more, in this example, we will put the focus on the modelling and classification algorithms using a pre-trained machine learning model optimized for face recognition, and Redis Stack as a vector database.
+
+Pattern recognition involves the training and testing of a system using data samples. One specific application of pattern recognition is face recognition, which focuses on human faces' unique patterns and features to identify individuals.
+
+We will use the [ORL Database of Faces](https://www.kaggle.com/datasets/tavarez/the-orl-database-for-training-and-testing/), provided by the [AT&T Laboratories Cambridge](http://cam-orl.co.uk/facedatabase.html), to train and test the system. The ORL database is among the simplest face databases, comprised of pictures of 40 individuals taken between April 1992 and April 1994, 10 images each, for a total of 400 photos: 92x112 black and white bitmaps. The faces are aligned, normalized, and ready to be processed by a feature extraction algorithm.
+
+![alt Implementing a face recognition system](img/Implementing-a-face-recognition-system.JPG)
+
+We will split the dataset into training and testing sets.
+
+- Of the 10 photos available per individual, we select 5 to extract vector embeddings and store them in Redis, one per document. This means we will use 200 images to train our system to recognize identities from the ORL database
+- The rest of 5 faces are used to test the system. Every test image is vectorized and vector search performed.
+- If the identity of the individual matches the result of vector search, we account for a success
+- We will present a recognition rate. Testing with different embedding models can be evaluated by the success rate
+
+We can extract the vector embeddings using [Deepface](https://github.com/serengil/deepface), a lightweight library for face recognition and facial attribute analysis. The library supports several models. In the example, we have configured [VGG-Face](https://sefiks.com/2018/08/06/deep-face-recognition-with-keras/), which maps an image to a vector of 2622 elements.
+
+**Working with Hashes**
+
+We propose two different models for this system. We can model a user as a series of Hashes, each containing a vector embedding. An example of an entry would be:
+
+```
+HGETALL face:s33:4
+1) "person_path"
+2) "../../data/orl/s33/4.bmp"
+3) "person_id"
+4) "s33"
+5) "embedding"
+6) "...binary_blob...
+```
+
+The code sample that implements the logic follows.
+
+```
+for person in range(1, 41):
+    person = "s" + str(person)
+    for face in range(1, 6):
+        facepath = '../../data/orl/' + person + "/" + str(face) + '.bmp'
+        print ("Training face: " + facepath)
+        vec = DeepFace.represent(facepath, model_name=models[0], enforce_detection=False)[0]['embedding']
+        embedding = np.array(vec, dtype=np.float32).astype(np.float32).tobytes()
+        face_data_values ={ 'person_id':person,
+                            'person_path':facepath,
+                            'embedding':embedding}
+        r.hset('face:'+person+':'+str(face),mapping=face_data_values)
+   
+```
+
+**Calculating the recognition rate**
+
+Similarly to the training phase, we iterate through the rest of the faces, extract the vector embedding from each facial picture, and perform vector search. If the recognition is successful, and the face belongs to the known identity, we increment a counter to calculate a relative rate.
+
+```
+def find_face(facepath):
+vec = DeepFace.represent(facepath, model_name=models[0], enforce_detection=False)[0]['embedding']
+embedding = np.array(vec, dtype=np.float32).astype(np.float32).tobytes()
+
+q = Query("*=>[KNN 1 @embedding $vec AS score]").return_field("score").dialect(2)
+res = r.ft("face_idx").search(q, query_params={"vec": embedding})
+
+for face in res.docs:
+    print(face.id.split(":")[1])
+    return face.id.split(":")[1]
+
+
+def test():
+success = 0
+for person in range(1, 41):
+    person = "s" + str(person)
+    for face in range(6, 11):
+        facepath = '../../data/orl/' + person + "/" + str(face) + '.bmp'
+        print ("Testing face: " + facepath)
+        found = find_face(facepath)
+        if (person == found):
+            success = success +1
+
+print(success/200*100)   
+```
+
+The default vector search parameters used in the example and the chosen embedding model provide a recognition rate of 99.5%. You can experiment further with different models.
+
+**Working with JSON documents**
+
+Modeling the training set using JSON documents allows a more compact data representation. We can store all the vector embeddings for a person (five, in this example) in the same JSON document rather than one Hash document per vector embedding.
+
+```
+JSON.GET face:s11
+{"person_id":"s11","embeddings":[[0.006758151110261679,0.018658878281712532,...],[0.006758151110261679,0.018658878281712532,...],[0.006758151110261679,0.018658878281712532,...],[0.006758151110261679,0.018658878281712532,...],[0.006758151110261679,0.018658878281712532,...]]
+```
+
+One unique feature of JSON documents is that you can index multiple numeric arrays as VECTOR, use a JSONPath matching multiple numeric arrays using JSONPath operators such as wildcard, filter, union, array slice, and/or recursive descent.
+
+The example proposed so far can be adapted with minor modifications. We can store the training set with the JSON command [JSON.ARRAPPEND](https://redis.io/commands/json.arrappend/) under the $.embedding field as follows:
+
+```
+for person in range(1, 41):
+    person = "s" + str(person)
+    r.json().set(f"face:{person}", "$", {'person_id':person})
+    r.json().set(f"face:{person}", "$.embeddings", [])
+    for face in range(1, 6):
+        facepath = '../../data/orl/' + person + "/" + str(face) + '.bmp'
+        print ("Training face: " + facepath)
+        vec = DeepFace.represent(facepath, model_name=EMBEDDING_MODEL, enforce_detection=False)[0]['embedding']
+        embedding = np.array(vec, dtype=np.float32).astype(np.float32).tolist()
+        r.json().arrappend(f"face:{person}",'$.embeddings', embedding)
+```
+
+The index definition changes slightly, as well. Here, we define what portion of the JSON document we would like to index using a JSONPath expression.
+
+```
+index_def = IndexDefinition(prefix=["face:"], index_type=IndexType.JSON)
+schema = (VectorField("$.embeddings[*]", "HNSW", {"TYPE": "FLOAT32", "DIM": 2622, "DISTANCE_METRIC": "COSINE"}, as_name="embeddings"))
+r.ft('face_idx').create_index(schema, definition=index_def)
+```
+
+> Note how the expression $.embeddings[*] selects all the vectors under the field $.embeddings.
+
+The execution of this example achieves the same recognition rate. You will now have the chance to study the entire notebook and run the examples.
+
 
 #### III. Lab Guide | Implementing a face recognition system
 
