@@ -345,20 +345,262 @@ We can simplify the architecture by considering the following three phases:
 
 #### VI. LLM conversation memory
 
+Current LLM services do not store any conversation history. So, conversations are stateless, which is the same. This means that once a question is asked and the answer generated, we cannot refer to previous passages in the conversation. Keeping the context of the conversation in memory and providing the LLM with the entire conversation (as a list of pairs question + response) together with the new question is the responsibility of the client application.
+
+> Review the body of the OpenAI [chat completion API](https://platform.openai.com/docs/api-reference/chat), which accepts messages: the list of messages comprising the ongoing conversation. However, sending back to the LLM the entire conversation may not be convenient for two main reasons.
+
+First, we should filter out **irrelevant interactions** from the current conversation when these do not relate to the last question. So, in practice, imagine a conversation about food interrupted by a few questions about coding and then additional questions about the former food context. Storing all the questions and responses and their corresponding vector embeddings in the user's session enables vector search to find those semantically similar interactions to the last question. Using this method, we can pick the relevant portion of the conversation.
+
+The second reason that motivates smart conversation history management is **cost reduction**. LLM-as-a-service models charge the user based on the number of tokens in the question and the answer. This means that the longer the context, the more expensive the LLM service.
+
+The idea behind the **LLM Conversation Memory** is to improve the model quality and personalization through an adaptive memory.
+
+- Persist all conversation history (memories) as embeddings in a vector database.
+- A conversational agent checks for relevant memories to aid or personalize the LLM behavior.
+- Allows users to change topics without misunderstandings seamlessly.
+
 
 #### VII. Semantic caching
+
+Semantic caching is used with large user bases or commonly asked questions. As usual with caching, this use case is about improving the application's responsiveness and reducing costs when using LLM-as-a-service. Because LLM completions are expensive, it helps to reduce the overall costs of the ML-powered application.
+
+In practical terms, if a semantic cache is in place, whenever a new question is asked, this will be vectorized, and semantic search will be executed to find out if this question was already asked (we may use vector search with range search and establish a radius to refine the results). If the same question has already been asked, the LLM does not intervene to generate the answer, and the cached response is returned. Otherwise, the LLM produces a new response, which is cached for future searches.
+
+- Use vector database to cache input prompts
+- Cache hits evaluated by semantic similarity
+
+> Note that the [RedisVL](https://github.com/RedisVentures/redisvl) client library makes semantic caching available out-of-the-box.
 
 
 #### VIII. Setting up a RAG Chatbot
 
+Prototyping an ML-powered chatbot is not an impossible mission. The many frameworks and libraries available, together with the simplicity of getting an API token from the chosen LLM service provider, can assist you in setting up a proof-of-concept in a few hours and lines of code. Sticking to the three phases mentioned earlier (preparation, generation, and retrieval), let's proceed to create a chatbot assistant, a **movie expert** you can consult to get recommendations from and ask for specific movies.
+
+> If you want to run the example first, jump to the bottom of this article to learn how to do so.
+
+**Preparation**
+
+Imagine a movie expert who may answer questions or recommend movies based on criteria (genre, your favorite cast, or rating). A smart, automated chatbot will be trained on a corpus of popular films, which, for this example, we have downloaded from Kaggle: the [IMDB movies dataset](https://www.kaggle.com/datasets/ashpalsingh1525/imdb-movies-dataset), with more than 10,000 movies and plenty of relevant information. An entry in the dataset stores the following information:
+
+```
+{
+  "names": "The Super Mario Bros. Movie",
+  "date_x": "04/05/2023",
+  "score": 76.0,
+  "genre": "Animation, Adventure, Family, Fantasy, Comedy",
+  "overview": "While working underground to fix a water main, Brooklyn plumbers—and brothers—Mario and Luigi are transported down a mysterious pipe and wander into a magical new world. But when the brothers are separated, Mario embarks on an epic quest to find Luigi.",
+  "crew": [
+    "Chris Pratt, Mario (voice)",
+    "Anya Taylor-Joy, Princess Peach (voice)",
+    "Charlie Day, Luigi (voice)",
+    "Jack Black, Bowser (voice)",
+    "Keegan-Michael Key, Toad (voice)",
+    "Seth Rogen, Donkey Kong (voice)",
+    "Fred Armisen, Cranky Kong (voice)",
+    "Kevin Michael Richardson, Kamek (voice)",
+    "Sebastian Maniscalco, Spike (voice)"
+  ],
+  "status": "Released",
+  "orig_lang": "English",
+  "budget_x": 100000000.0,
+  "revenue": 724459031.0,
+  "country": "AU"
+}
+```
+
+As mentioned, to enable context retrieval, we will capture the semantics of the data using an embedding model and we will store the embedding vector in the database, which will perform indexing using the desired method (FLAT or HNSW), distance (L2, IP or COSINE) and the required vector dimension. In particular, the index definition depends on the dimension of the vector specified by DIM, which is set by the chosen embedding model. The chosen embedding model we will use along this example is the open-source all-MiniLM-L6-v2 sentence transformer, which converts the provided paragraphs to a 384 dimensional dense vector space.
+
+> Note that embedding models support the conversion of texts up to a certain size. The chosen model warns that "input text longer than 256-word pieces is truncated". This is not an issue for our movie dataset because we expect to convert paragraphs whose length is shorter than the limit. However, a text chunking strategy to map a document to multiple vector embeddings is needed for longer texts or even entire books.
+
+Now we can parse the CSV dataset and import it in JSON format into Redis so that we can read a movie entry with:
+
+```
+JSON.GET moviebot:movie:2 $.names $.overview
+{"$.overview":["While working underground to fix a water main, Brooklyn plumbers—and brothers—Mario and Luigi are transported down a mysterious pipe and wander into a magical new world. But when the brothers are separated, Mario embarks on an epic quest to find Luigi."],"$.names":["The Super Mario Bros. Movie"]}
+```
+
+We can read any nested entry or multiple entries in JSON documents stored in Redis Enterprise using the [JSONPath](https://redis.io/docs/data-types/json/path/) syntax. However, we need an index to perform searches. So, we will proceed to create an index for this dataset, define the schema aligned to the data structure, and specify the embedding model and distance metric to be used for semantic search with vector search as long as the vector dimension set by the chosen embedding model, 384 in this case. A possible index definition could be:
+
+```
+FT.CREATE movie_idx ON JSON PREFIX 1 moviebot:movie: SCHEMA $.crew AS crew TEXT $.overview AS overview TEXT $.genre AS genre TAG SEPARATOR , $.names AS names TAG SEPARATOR , $.overview_embedding AS embedding VECTOR HNSW 6 TYPE FLOAT32 DIM 384 DISTANCE_METRIC COSINE
+```
+
+This definition enables searches on several fields. As an example, we can perform a full-text search:
+
+```
+FT.SEARCH movie_idx @overview:'While working underground' RETURN 1 names
+1) (integer) 1
+2) "moviebot:movie:2"
+3) 1) "names"
+   2) "The Super Mario Bros. Movie"
+```
+
+Or retrieve a movie by exact title match:
+
+```
+FT.SEARCH movie_idx @names:{Interstellar} RETURN 1 overview
+    1) (integer) 1
+    2) "moviebot:movie:190"
+    3) 1) "overview"
+       2) "The adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage."
+```
+
+Secondary index search is certainly relevant to assist the retrieval of contextual information or additional details, or even when the codebase is tightly coupled to the LLM using [function calling](https://platform.openai.com/docs/guides/gpt/function-calling) capabilities. We want to answer questions using information that spans the entire dataset (such as the average rating of all the movies of a specific genre). However, for this proof-of-concept, we will resort to vector search only, and the index defined accordingly.
+
+The final step to complete the preparation phase is deciding what will be indexed by the database; for that, we need to prepare the paragraph to be transformed by the embedding model. We can capture as much information as we want. In the following Python excerpt, we will extract one entry and format the string movie.
+
+```
+result = conn.json().get(key, "$.names", "$.overview", "$.crew", "$.score", "$.genre")
+movie = f"movie title is: {result['$.names'][0]}\n"
+movie += f"movie genre is: {result['$.genre'][0]}\n"
+movie += f"movie crew is: {result['$.crew'][0]}\n"
+movie += f"movie score is: {result['$.score'][0]}\n"
+movie += f"movie overview is: {result['$.overview'][0]}\n"
+```
+
+Now, we can transform this string to a vector using the chosen model and store the vector in the same JSON entry, so the vector is packed together with the original entry in a compact object.
+
+```
+from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+embedding = model.encode(movie).astype(np.float32).tolist()
+conn.json().set(key, "$.overview_embedding", embedding)
+```
+
+Repeating the operation for all the movies in the dataset completes the preparation phase.
+
+**Retrieval**
+
+In this phase, we deal with the question from the user. The interaction is usually collected in the front end of a web application, using a standard input form, so you can capture it and forward it to the back end for processing. As anticipated, the question and the context will be semantically similar, so a proven technique to instruct the LLM with a context is to transform the question to vector embedding, then perform vector search to collect the desired number of outputs, and finally construct the prompt. A Python sample code to perform vector search in Redis follows:
+
+```
+context = ""
+q = Query("@embedding:[VECTOR_RANGE $radius $vec]=>{$YIELD_DISTANCE_AS: score}") \
+    .sort_by("score", asc=True) \
+    .return_fields("overview", "names", "score", "$.crew", "$.genre", "$.score") \
+    .paging(0, 3) \
+    .dialect(2)
+
+# Find all vectors within VSS_MINIMUM_SCORE of the query vector
+query_params = {
+    "radius": VSS_MINIMUM_SCORE,
+    "vec": model.encode(query).astype(np.float32).tobytes()
+}
+
+res = conn.ft("movie_idx").search(q, query_params)
+
+if (res is not None) and len(res.docs):
+    it = iter(res.docs[0:])
+    for x in it:
+        movie = f"movie title is: {x['names']}\n"
+        movie += f"movie genre is: {x['$.genre']}\n"
+        movie += f"movie crew is: {x['$.crew']}\n"
+        movie += f"movie score is: {x['$.score']}\n"
+        movie += f"movie overview is: {x['overview']}\n"
+        context += movie + "\n"
+```
+
+The search command performs a vector search range search and filters results exceeding a certain score specified by VSS_MINIMUM_SCORE and collects three samples. In the example, we extract the desired metadata from the results and concatenate it to create a context for the interaction.
+
+In our example, the dataset provides a short overview of the movie and other information, so we can construct the context by concatenating the information in a string. However, the context window supported by LLMs is limited by a maximum number of tokens (learn more from the [OpenAI tokenizer page](https://platform.openai.com/tokenizer)). In addition, the LLM service provider charges you by the overall number of input and output tokens, so limiting the number of tokens provided in the context and instructing the model to return an output limited in size may be convenient.
+
+Having retrieved the required information, the prompt you construct should include the knowledge you want the LLM to use for generating responses. It should provide clear instructions for handling user queries and accessing the indexed data. An example might be:
+
+```
+prompt = '''Use the provided information to answer the search query the user has sent. 
+The information in the database provides three movies, choose the one or the ones that fit most.
+If you can't answer the user's question, say "Sorry, I am unable to answer the question, 
+try to refine your question". Do not guess. You must deduce the answer exclusively 
+from the information provided. 
+The answer must be formatted in markdown or HTML.
+Do not make things up. Do not add personal opinions. Do not add any disclaimer.
+
+Search query: 
+
+{}
+
+Information in the database: 
+
+{}
+'''.format(query, context)
+```
+
+Formatting the prompt with the context and the query from the user completes the retrieval phase, and we are ready to interact with the LLM.
+
+**Generation**
+
+In the final phase, which concludes this example, we will forward the prompt to the LLM. We will use an OpenAI endpoint to leverage the GPT-3.5 model [gpt-3.5-turbo-0613(https://platform.openai.com/docs/models/gpt-3-5)], but we may have used the desired model. Whatever the choice, using an LLM-as-a-service is the best way to set up and prepare a demonstration without major efforts, which a local LLM will imply. To go ahead with GPT-3.5, create your OpenAI token and specify it using the environment variable OPENAI_API_KEY.
+
+```
+export OPENAI_API_KEY="1234567890abcdefghijklmnopqrstuvwxyz"
+```
+
+Using the OpenAI ChatCompletion API is straightforward, refer to the [API documentation](https://platform.openai.com/docs/api-reference/chat) to learn the details. To send the request you will need to specify, besides the chosen model, at least:
+
+- **The system message** sets the context and the tone of the conversation. It is typically the first message in the interaction and guides the model's behavior during the conversation. For example, you may specify here that you would like the interaction customized for primary school students. This would tune the tone accordingly and produce responses suitable for youngsters.
+
+- **The stream behavior**. If you have used the ChatGPT online chatbot, you have noticed how the first word is returned almost immediately after submitting the question. This happens because the response is built and streamed as it is produced on the server. This creates a good user experience but requires managing a stream of information and updating the user interface accordingly. In this example, we will go for a batched response, so the time to the first word equals the time to get the full response, which is easier to implement.
+
+- **The messages in the conversation**. In this example, we are submitting the prompt just produced, but note that you won't be able to ask the LLM questions such as *Can you refine the previous response to be shorter? or make a summary of the conversation kept so far*. Conversations with the LLM are stateless, so the model does not keep track of any interaction. It is delegated to the client application to store the messages, search for them when required, and forward them as a list of messages.
+
+```
+system_msg = 'You are a smart and knowledgeable AI assistant with expertise in all kinds of movies. You are a very friendly and helpful AI. You are empowered to recommend movies based on the provided context. Do NOT make anything up. Do NOT engage in topics that are not about movies.';
+try:
+    response = openai.ChatCompletion.create(model="gpt-3.5-turbo-0613",
+                                            stream=False,
+                                            messages=[{"role": "system", "content": system_msg},
+                                                        {"role": "user", "content": prompt}])
+    return response["choices"][0]["message"]["content"]
+except openai.error.OpenAIError as e:
+    # Handle the error here
+    if "context window is too large" in str(e):
+        print("Error: Maximum context length exceeded. Please shorten your input.")
+        return "Maximum context length exceeded"
+    else:
+        print("An unexpected error occurred:", e)
+        return "An unexpected error occurred"
+```
+
+Congratulations, you have completed the setup of a movie expert chatbot! Now follow the activity proposed in the next unit to run the complete implementation.
+
 
 #### IX. Lab Guide | Setting up a RAG Chatbot
+
+We have provided you with a Jupyter notebook that includes the entire example and opens an input form to chat with the Generative AI within the notebook. Follow this procedure to create and activate your Python virtual environment:
+
+```
+python -m venv vssvenv
+source vssvenv/bin/activate
+```
+
+Once done, install the required modules defined by the requirements.txt requirements file, available under [/src/jupyter](https://github.com/redislabs-training/ru402/tree/main/src/jupyter)
+
+```
+pip install -r requirements.txt
+```
+
+Ensure that you have database host, port, username and password for your Redis Cloud database at hand (alternatively, a Redis Stack instance is running). Complete the configuration of the environment by setting the environment variable that configures your Redis instance (default is localhost on port 6379) and your [OpenAI token](https://platform.openai.com/docs/quickstart/account-setup): the chatbot leverages the OpenAI ChatGPT ChatCompletion API.
+
+- Connect to the database using RedisInsight or redis-cli and flush the database with FLUSHALL.
+- Configure the environment variable to connect export REDIS_URL=redis://user:password@host:port
+- Configure the OpenAI token using the environment variable: export OPENAI_API_KEY="your-openai-token"
+
+Now, you can start the notebook and execute all the cells.
+
+```
+jupyter notebook moviebot.ipynb
+```
+
+The execution of the notebook will open an input field. Type your question (e.g., *Recommend three science fiction movies*) and check the result!
 
 
 #### X. "The sky is the limit"
 
 
+
 #### XI. Take your next step
+
 
 
 ### EOF (2025/02/22)
