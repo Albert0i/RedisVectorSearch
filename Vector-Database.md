@@ -171,7 +171,10 @@ First, the JSON data type supports the same features as the Hash data type when 
 
 - **Searching**
 1. When using **Hashes**, storing and searching vectors requires using the binary blob format.
-2. For **JSON documents**, formats used for storing and searching are asymmetric: vectors must be stored as lists rather than binary blobs (model.encode(text).astype(np.float32).tolist()), but to perform VSS, JSON requires the binary blob format model.encode(text).astype(np.float32).tobytes()
+2. For **JSON documents**, formats used for storing and searching are asymmetric: vectors must be stored as lists rather than binary blobs 
+```
+(model.encode(text).astype(np.float32).tolist()), but to perform VSS, JSON requires the binary blob format model.encode(text).astype(np.float32).tobytes()
+```
 - **Indexing**. The Hash can index a single vector, defined by the FT.CREATE command. The JSON format, instead, can store and have multiple vectors indexed, identified by a JSONPath expression
 - **Footprint**. JSON has a larger memory footprint compared to the Hash
 
