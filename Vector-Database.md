@@ -13,6 +13,7 @@ Vector databases resolve the problem of managing vectors and their operations, s
 
 In the following units, we will learn how Redis Stack is designed to perform vector search across millions of vectors with real-time performance. In addition, we will discover how Redis Enterprise and Redis Cloud are designed for high availability and scalability and allow the design of production-ready modern applications.
 
+
 #### II. Modeling vectors in Redis
 
 All the Redis database flavors can store, index, and search vectors. This means that you can work with vectors using the [Redis Stack](https://redis.io/docs/about/about-stack/) distribution in your development environment and also for functional testing. Redis Enterprise and Redis Enterprise Cloud are built upon the Redis Stack capabilities, but they also offer a robust set of features to work efficiently with vectors at scale.
@@ -29,6 +30,7 @@ Redis can store any arbitrary object once serialization and deserialization rout
 
 Since Redis Stack Server 6.2.2-v1, vectors can be stored as Hash or JSON documents, providing flexibility in how data is structured and accessed. Multiple indexing methods are supported, including FLAT and HNSW, enabling users to choose the most suitable approach for their specific use cases. Users can privilege precision over speed with the FLAT method or ensure high throughput with a little compromise on accuracy using HNSW. Additionally, Redis offers support for various distance metrics such as L2, IP, and COSINE, further enhancing the precision and efficiency of vector searches for specific types of embeddings. With these features, Redis becomes a flexible solution for businesses seeking to harness the power of vector data in diverse applications, from recommendation engines to similarity search tasks.
 
+
 #### III. Storing vectors: the HASH and JSON data types
 
 Both the Hash and the JSON data types are suitable vector containers. In the following examples, we will show how to work with such data types. Let's calculate the vector embedding first, using the free [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) embedding model from the HuggingFace library. This model maps texts of up to 256 words to a 384-dimensional dense vector space.
@@ -42,6 +44,7 @@ embedding = model.encode(text)
 > Note that Redis does not generate vectors; this is the responsibility of the client application to choose the desired library (HuggingFace, OpenAI, Cohere, and more)
 
 Next, we will store the vector embedding using the desired data structure and learn the syntax to create the index on the vector field stored in the document of choice. If you have already worked with Redis secondary indexing capabilities, you know how to use the commands [FT.CREATE](https://redis.io/commands/ft.create/) and [FT.SEARCH](https://redis.io/commands/ft.search/). Vectors can be indexed using the VECTOR data type, which adds to the existing TEXT, TAG, NUMERIC, GEO and GEOSHAPE types.
+
 
 #### IV. Working with hashes
 
@@ -91,6 +94,7 @@ Note how we have specified:
 
 Refer to the [documentation](https://redis.io/docs/interact/search-and-query/advanced-concepts/vectors/) to learn more about these options.
 
+
 #### V. Working with JSON documents
 
 When using the JSON type to store the vectors, differently from the hash, vectors must be stored as **arrays of floats** instead of binary blobs. In this Python code sample, the numPy library converts the vector embedding to a list and stores it with the original text and the desired data.
@@ -116,6 +120,7 @@ FT.CREATE doc_idx ON JSON PREFIX 1 doc: SCHEMA $.content as content TEXT $.genre
 ```
 
 Once the data is inserted and the index created using the desired data type, searching for similarity is straightforward.
+
 
 #### VI. Lab Guide | Searching vectors
 
@@ -152,6 +157,7 @@ Result{2 total, docs: [Document {'id': 'doc:1', 'payload': None, 'score': '0.057
 Expectedly, the best match is "That is a very happy person", having a shorter distance from the test sentence "That is a happy person".
 
 > Note that the cosine distance is complementary to cosine similarity and can be obtained by subtracting the value of the cosine similarity from 1.
+
 
 #### VII. Data types, distances and indexing methods
 
@@ -199,6 +205,7 @@ You can use the FLAT indexing method for smaller datasets. This method compares 
 - Hierarchical Navigable Small World graphs (HNSW)<br />
 For more extensive datasets, it becomes difficult to compare the test vector to every single vector in the index, so a probabilistic approach is adopted through the HNSW algorithm. This method provides speedy search results. This approach trades some accuracy for significant performance improvements.
 
+
 #### VIII. Lab Guide | Vector search with range queries
 
 Redis supports **Range Queries** for vector search, a way of filtering query results by the **distance** between the stored vectors and a query vector in terms of the relevant vector field distance metric. You can think of it as a geo query by radius, where we return all the points within a certain distance of a given point, except that the radius is the distance between the vectors. As an example, we can modify the query written in the previous example with:
@@ -216,6 +223,7 @@ Result{1 total, docs: [Document {'id': 'doc:1', 'payload': None, 'score': '0.057
 
 The matching sentence is the expected result. You can learn more about range queries in the [documentation](https://redis.io/docs/interact/search-and-query/advanced-concepts/vectors/#range-query).
 
+
 #### IX. Lab Guide | Vector search with hybrid queries
 
 Vector search can be combined with the other querying mechanisms (including range queries), giving us the possibility to run **hybrid queries**. For example, we can modify the query in the previous example as follows to indicate that we want to filter by category. Using the TAG field specified for the genre:
@@ -231,6 +239,7 @@ Result{1 total, docs: [Document {'id': 'doc:2', 'payload': None, 'score': '0.305
 ```
 
 You can learn more about hybrid queries in the [documentation](https://redis.io/docs/interact/search-and-query/advanced-concepts/vectors/#hybrid-queries).
+
 
 #### X. Quiz | Redis as a Vector Database 
 
