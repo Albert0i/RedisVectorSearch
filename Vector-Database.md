@@ -191,9 +191,9 @@ Depending on the model used to represent the unstructured data, one distance may
 
 When a new vector is added to Redis, it can be indexed by one of the two indexing methods:
 
-- Flat index (FLAT)
+- Flat index (FLAT)<br />
 You can use the FLAT indexing method for smaller datasets. This method compares the test vector to all the vectors in the index, one by one. This is a more accurate but much slower and compute-intensive approach
-- Hierarchical Navigable Small World graphs (HNSW)
+- Hierarchical Navigable Small World graphs (HNSW)<br />
 For more extensive datasets, it becomes difficult to compare the test vector to every single vector in the index, so a probabilistic approach is adopted through the HNSW algorithm. This method provides speedy search results. This approach trades some accuracy for significant performance improvements.
 
 #### VIII. Lab Guide | Vector search with range queries
