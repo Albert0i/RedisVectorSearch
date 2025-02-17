@@ -633,10 +633,10 @@ main()
 
 ![alt transformer.js](img/transformer.js.JPG)
 
-- [Semantic Search](./SemanticSearch.md)
-- [Vector Database](./Vector-Database.md)
-- [Vector Search](./VectorSearch.md)
-- [Working with node-redis](./Working-with-node-redis.md)
+- [Introduction to semantic search](./SemanticSearch.md)
+- [Introduction to vector search](./VectorSearch.md)
+- [Redis as a vector database](./Vector-Database.md)
+- [Vector and working with client libraries](./Working-with-node-redis.md)
 - [Vector advanced topics](./Vector-advanced-topics.md)
 - [Redis for AI final exam](./Exam-Redis-for-AI-exam.pdf)
 
