@@ -651,7 +651,9 @@ main()
 7. [Query data](https://redis.io/docs/latest/develop/interact/search-and-query/query/)
 8. [ioredis](https://github.com/redis/ioredis?tab=readme-ov-file)
 9. [Transformers.js](https://github.com/huggingface/transformers.js?tab=readme-ov-file#readme)
-10. [The Stranger by Albert Camus](https://www.macobo.com/essays/epdf/CAMUS,%20Albert%20-%20The%20Stranger.pdf)
+10. [pgvector](https://github.com/pgvector/pgvector)
+11. [Vector Similarity Search: From Basics to Production](https://mlops.community/vector-similarity-search-from-basics-to-production/)
+12. [The Stranger by Albert Camus](https://www.macobo.com/essays/epdf/CAMUS,%20Albert%20-%20The%20Stranger.pdf)
 
 
 #### Epilogue 
