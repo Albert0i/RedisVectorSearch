@@ -493,6 +493,21 @@ Example 1:
 ```
 This is equivalent to
 ```
+CREATE TABLE quotes (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    author CHAR(100),
+    source CHAR(100),
+    quote VARCHAR(1000),
+    FULLTEXT(quote)
+) ENGINE=InnoDB;
+
+INSERT INTO quotes (author, source, quote) VALUES
+('Edgar Allan Poe', 'The Works of Edgar Allan Poe', 'All that we see or seem is but a dream within a dream.'),
+('Fyodor Dostoevsky', 'Crime and Punishment', 'To go wrong in one’s own way is better than to go right in someone else’s.'),
+('Charles Dickens', 'A Tale of Two Cities', 'It was the best of times, it was the worst of times.'),
+('Oscar Wilde', 'The Picture of Dorian Gray', 'The only way to get rid of a temptation is to yield to it.');
+. . . 
+
 SELECT count(*) FROM quotes
 ```
 
