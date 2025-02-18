@@ -111,7 +111,7 @@ r.json().set("doc:1", '$', doc)
 
 Redis long-time users are familiar with the Hash data type and may opt for it based on its simplicity, speed, and reduced memory footprint. Users that have experience with document stores, instead, may privilege the JSON format for better interoperability.
 
-> Note that one JSON document can store and index multiple vector embeddings. Certain data models may benefit from this feature for specific data representations and document searches. For example, if a large document is split into several chunks, these can all be stored under the same JSON document together with their associated representation as a vector.
+> *Note that one JSON document can store and index multiple vector embeddings. Certain data models may benefit from this feature for specific data representations and document searches. For example, if a large document is split into several chunks, these can all be stored under the same JSON document together with their associated representation as a vector.*
 
 Indexing the JSON document can be achieved similarly to the hash:
 
