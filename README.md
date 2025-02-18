@@ -557,23 +557,23 @@ ORDER BY author
 
 Example 4: 
 ```
-> FT.SEARCH idx:quotes "@author:{Charles Dickens} @quote:(dream | love | death)" SUMMARIZE HIGHLIGHT RETURN 2 quote source LIMIT 0 99
+> FT.SEARCH idx:quotes "@author:{Charles Dickens} @quote:(dream | love | death)" SUMMARIZE HIGHLIGHT RETURN 2 quote source SORTBY quote ASC LIMIT 0 99
 1) "4"
 2) "quote:98"
 3) 1) "quote"
    2) "<b>loving</b> heart is the truest wisdom... "
    3) "source"
    4) "David Copperfield"
-4) "quote:109"
+4) "quote:100"
 5) 1) "quote"
-   2) "this: that a thing constructed can only be <b>loved</b> after it is constructed; but a thing created is <b>loved</b> before it exists... "
-   3) "source"
-   4) "Our Mutual Friend"
-6) "quote:100"
-7) 1) "quote"
    2) "do great things. We can only do small things with great <b>love</b>.... "
    3) "source"
    4) "David Copperfield"
+6) "quote:109"
+7) 1) "quote"
+   2) "this: that a thing constructed can only be <b>loved</b> after it is constructed; but a thing created is <b>loved</b> before it exists... "
+   3) "source"
+   4) "Our Mutual Friend"
 8) "quote:113"
 9) 1) "quote"
    2) "is a man who would give his life to keep a life you <b>love</b> beside you... "
@@ -586,6 +586,7 @@ SELECT quote, source
 FROM quotes 
 WHERE author = "Charles Dickens" AND 
       MATCH(quote) AGAINST('dream | love | death' IN BOOLEAN MODE)
+ORDER BY quote ASC      
 LIMIT 0 99
 ```
 
