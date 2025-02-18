@@ -474,16 +474,62 @@ To create an index for our quotes database:
 ```
 FT.CREATE idx:quotes ON JSON PREFIX 1 quote:
   SCHEMA
-  $.author as author TEXT NOSTEM SORTABLE
-  $.quote as quote TEXT NOSTEM SORTABLE
-  $.source as source TEXT NOSTEM SORTABLE
-  $.embeddings as embeddings VECTOR FLAT 10
+  $.author as author TAG SORTABLE
+  $.quote as quote TEXT 
+  $.source as source TAG SORTABLE
+  $.embeddings as embeddings VECTOR FLAT 6
           TYPE FLOAT32
           DIM 768
-          DISTANCE_METRIC L2
-          INITIAL_CAP 111
-          BLOCK_SIZE  111
+          DISTANCE_METRIC COSINE
 ```
+
+For now, play around with the index we've just created: 
+```
+> FT.SEARCH idx:quotes * LIMIT 0 0
+1) "245"
+```
+This is equivalent to
+```
+SELECT count(*) FROM quotes
+```
+
+```
+> FT.AGGREGATE idx:quotes * GROUPBY 1 @author REDUCE COUNT 0 AS count SORTBY 2 @author ASC 
+1) "6"
+2) 1) "author"
+   2) "Agatha Christie"
+   3) "count"
+   4) "40"
+3) 1) "author"
+   2) "Charles Dickens"
+   3) "count"
+   4) "41"
+4) 1) "author"
+   2) "Edgar Allan Poe"
+   3) "count"
+   4) "42"
+5) 1) "author"
+   2) "Fyodor Dostoevsky"
+   3) "count"
+   4) "41"
+6) 1) "author"
+   2) "George Orwell"
+   3) "count"
+   4) "40"
+7) 1) "author"
+   2) "Oscar Wilde"
+   3) "count"
+   4) "41"
+```
+This is equivalent to
+```
+SELECT author, count(*) 
+FROM quotes 
+GROUP BY author
+ORDER BY author
+```
+
+That's funny! Is it not? 
 
 > When storing a vector embedding within a JSON document, the embedding is stored as a JSON array. In the example above, the array was shortened considerably for the sake of readability.
 
@@ -667,4 +713,4 @@ main()
 ```
 
 
-### EOF (2025/02/17)
+### EOF (2025/02/22)

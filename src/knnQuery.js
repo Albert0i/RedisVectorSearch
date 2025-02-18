@@ -32,7 +32,7 @@ const queryQuoteEmbeddingsByKNN = async (
                                        'idx:quotes', 
                                        searchQuery, 
                                        'RETURN', 4, 'score', 'author', 'quote', 'source', 
-                                       'SORTBY', 'score', 
+                                       'SORTBY', 'score', 'ASC', 
                                        'PARAMS', 2, 'searchBlob', 
                                                     float32Buffer(searchTxtVectorArr), 
                                        'DIALECT', 2);

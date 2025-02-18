@@ -1,0 +1,185 @@
+First Result: (Vitality, internet, violate, garden, expectation, push, economic, write, container, rather)
+
+[
+  5,
+  'quote:189',
+  [
+    'score',
+    '0.713010966778',
+    'author',
+    'Oscar Wilde',
+    'quote',
+    'We live in an age when unnecessary things are our only necessities.',
+    'source',
+    'The Picture of Dorian Gray'
+  ],
+  'quote:105',
+  [
+    'score',
+    '0.740335583687',
+    'author',
+    'Charles Dickens',
+    'quote',
+    'Electric communication will never be a substitute for the face of someone who with their soul encourages another person to be brave and true.',
+    'source',
+    'The Pickwick Papers'
+  ],
+  'quote:237',
+  [
+    'score',
+    '0.774337768555',
+    'author',
+    'George Orwell',
+    'quote',
+    'If people cannot write well, they cannot think well, and if they cannot think well, others will do their thinking for them.',
+    'source',
+    'Animal Farm'
+  ],
+  'quote:59',
+  [
+    'score',
+    '0.787633836269',
+    'author',
+    'Fyodor Dostoevsky',
+    'quote',
+    'There is immeasurably more left inside than what comes out in words.',
+    'source',
+    'The Brothers Karamazov'
+  ],
+  'quote:186',
+  [
+    'score',
+    '0.7987408638',
+    'author',
+    'Oscar Wilde',
+    'quote',
+    'A poet can survive everything but a misprint.',
+    'source',
+    'Oscariana'
+  ]
+]
+
+
+Second Result: (Anxiety, sandwich, shell, mobile, generate, desire, stubborn, time, generosity, cathedral)
+
+[
+  5,
+  'quote:53',
+  [
+    'score',
+    '0.671974539757',
+    'author',
+    'Fyodor Dostoevsky',
+    'quote',
+    'Much unhappiness has come into the world because of bewilderment and things left unsaid.',
+    'source',
+    'The Brothers Karamazov'
+  ],
+  'quote:169',
+  [
+    'score',
+    '0.679596543312',
+    'author',
+    'Oscar Wilde',
+    'quote',
+    'The only way to get rid of a temptation is to yield to it. Resist it, and your soul grows sick with longing for the things it has forbidden to itself.',
+    'source',
+    'The Picture of Dorian Gray'
+  ],
+  'quote:25',
+  [
+    'score',
+    '0.691442668438',
+    'author',
+    'Edgar Allan Poe',
+    'quote',
+    'There are chords in the hearts of the most reckless which cannot be touched without emotion.',
+    'source',
+    'The Masque of the Red Death'
+  ],
+  'quote:79',
+  [
+    'score',
+    '0.70546656847',
+    'author',
+    'Fyodor Dostoevsky',
+    'quote',
+    'I swear to you, gentlemen, that to be overly conscious is a sickness, a real, thorough sickness.',
+    'source',
+    'Notes from Underground'
+  ],
+  'quote:189',
+  [
+    'score',
+    '0.727353751659',
+    'author',
+    'Oscar Wilde',
+    'quote',
+    'We live in an age when unnecessary things are our only necessities.',
+    'source',
+    'The Picture of Dorian Gray'
+  ]
+]
+
+
+Third Result: (Opportunity, endeavor, wacky, guideline, fantasy, imagine, poem, superficial, galaxy, psychology)
+
+[
+  5,
+  'quote:22',
+  [
+    'score',
+    '0.592817902565',
+    'author',
+    'Edgar Allan Poe',
+    'quote',
+    'To elevate the soul, poetry is necessary.',
+    'source',
+    'Edgar Allan Poe'
+  ],
+  'quote:21',
+  [
+    'score',
+    '0.602054476738',
+    'author',
+    'Edgar Allan Poe',
+    'quote',
+    'With me poetry has not been a purpose, but a passion.',
+    'source',
+    'Edgar Allan Poe'
+  ],
+  'quote:154',
+  [
+    'score',
+    '0.63158839941',
+    'author',
+    'Agatha Christie',
+    'quote',
+    'You gave too much rein to your imagination. Imagination is a good servant, and a bad master. The simplest explanation is always the most likely.',
+    'source',
+    'The Mysterious Affair at Styles'
+  ],
+  'quote:186',
+  [
+    'score',
+    '0.635281264782',
+    'author',
+    'Oscar Wilde',
+    'quote',
+    'A poet can survive everything but a misprint.',
+    'source',
+    'Oscariana'
+  ],
+  'quote:122',
+  [
+    'score',
+    '0.638278663158',
+    'author',
+    'Charles Dickens',
+    'quote',
+    'In the little world in which children have their existence, there is nothing so finely perceived and finely felt, as injustice.',
+    'source',
+    'Great Expectations'
+  ]
+]
+
