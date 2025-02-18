@@ -498,7 +498,20 @@ SELECT count(*) FROM quotes
 
 Example 2: 
 ```
-FT.AGGREGATE idx:quotes * GROUPBY 1 @author SORTBY 2 @author ASC
+> FT.AGGREGATE idx:quotes * GROUPBY 1 @author SORTBY 2 @author ASC
+1) "6"
+2) 1) "author"
+   2) "Agatha Christie"
+3) 1) "author"
+   2) "Charles Dickens"
+4) 1) "author"
+   2) "Edgar Allan Poe"
+5) 1) "author"
+   2) "Fyodor Dostoevsky"
+6) 1) "author"
+   2) "George Orwell"
+7) 1) "author"
+   2) "Oscar Wilde"
 ```
 This is equivalent to
 ```
