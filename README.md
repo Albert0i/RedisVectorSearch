@@ -570,7 +570,7 @@ WHERE author = "Charles Dickens" AND
 LIMIT 0 99
 ```
 
-**It's funny! Is it not? **
+**It's fun! Is it not?**
 
 > When storing a vector embedding within a JSON document, the embedding is stored as a JSON array. In the example above, the array was shortened considerably for the sake of readability.
 
