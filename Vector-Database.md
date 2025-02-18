@@ -156,7 +156,7 @@ Result{2 total, docs: [Document {'id': 'doc:1', 'payload': None, 'score': '0.057
 ```
 Expectedly, the best match is "That is a very happy person", having a shorter distance from the test sentence "That is a happy person".
 
-> Note that the cosine distance is complementary to cosine similarity and can be obtained by subtracting the value of the cosine similarity from 1.
+> *Note that the cosine distance is complementary to cosine similarity and can be obtained by subtracting the value of the cosine similarity from 1.*
 
 
 #### VII. Data types, distances and indexing methods
