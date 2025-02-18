@@ -494,6 +494,14 @@ SELECT count(*) FROM quotes
 ```
 
 ```
+FT.AGGREGATE idx:quotes * GROUPBY 1 @author SORTBY 2 @author ASC
+```
+This is equivalent to
+```
+SELECT DISTINCT author FROM quotes ORDER BY author 
+```
+
+```
 > FT.AGGREGATE idx:quotes * GROUPBY 1 @author REDUCE COUNT 0 AS count SORTBY 2 @author ASC 
 1) "6"
 2) 1) "author"
