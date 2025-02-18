@@ -179,7 +179,12 @@ Once your virtual environment is configured, you can move on to the rest of the 
 
 Running this example returns the following output:
 
-Query: That is a happy person That is a very happy person  -> similarity score =  0.9429151 That is a happy dog  -> similarity score =  0.6945774 Today is a sunny day  -> similarity score =  0.256876
+Query: That is a happy person 
+```
+That is a very happy person  -> similarity score =  0.9429151 
+That is a happy dog  -> similarity score =  0.6945774 
+Today is a sunny day  -> similarity score =  0.256876
+```
 
 We could have expected that the sentences "That is a happy person" and "That is a very happy person" represent the pair having the highest similarity score. In the example, we are comparing the angles between pairs of vectors in a 384-dimensional vector space using the cosine distance.
 
