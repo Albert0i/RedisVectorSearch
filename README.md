@@ -555,7 +555,61 @@ GROUP BY author
 ORDER BY author
 ```
 
-Example 4: 
+Example 4:
+```
+> FT.AGGREGATE idx:quotes * GROUPBY 1 @source REDUCE COUNT 0 AS count SORTBY 2 @source ASC LIMIT 0 99
+1) "71"
+2) 1) "source"
+   2) "A Christmas Carol"
+   3) "count"
+   4) "5"
+3) 1) "source"
+   2) "A Clergyman's Daughter"
+   3) "count"
+   4) "1"
+4) 1) "source"
+   2) "A Dream Within a Dream"
+   3) "count"
+   4) "1"
+5) 1) "source"
+   2) "A Tale of Two Cities"
+   3) "count"
+   4) "6"
+6) 1) "source"
+   2) "A Woman of No Importance"
+   3) "count"
+   4) "2"
+7) 1) "source"
+   2) "All Art is Propaganda"
+   3) "count"
+   4) "1"
+8) 1) "source"
+   2) "Alone"
+   3) "count"
+   4) "1"
+9) 1) "source"
+   2) "An Autobiography"
+   3) "count"
+   4) "17"
+10) 1) "source"
+   2) "An Ideal Husband"
+   3) "count"
+   4) "6"
+11) 1) "source"
+   2) "Animal Farm"
+   3) "count"
+   4) "5"
+. . . 
+```
+This is equivalent to
+```
+SELECT source, count(*) 
+FROM quotes 
+GROUP BY source
+ORDER BY source
+```
+
+Example 5: 
 ```
 > FT.SEARCH idx:quotes "@author:{Charles Dickens} @quote:(dream | love | death)" SUMMARIZE HIGHLIGHT RETURN 2 quote source SORTBY quote ASC LIMIT 0 99
 1) "4"
