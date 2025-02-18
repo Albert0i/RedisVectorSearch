@@ -485,6 +485,8 @@ FT.CREATE idx:quotes ON JSON PREFIX 1 quote:
 
 ---
 For now, let's play with the index just created: 
+
+Example 1: 
 ```
 > FT.SEARCH idx:quotes * LIMIT 0 0
 1) "245"
@@ -494,6 +496,7 @@ This is equivalent to
 SELECT count(*) FROM quotes
 ```
 
+Example 2: 
 ```
 FT.AGGREGATE idx:quotes * GROUPBY 1 @author SORTBY 2 @author ASC
 ```
@@ -502,6 +505,7 @@ This is equivalent to
 SELECT DISTINCT author FROM quotes ORDER BY author 
 ```
 
+Example 3: 
 ```
 > FT.AGGREGATE idx:quotes * GROUPBY 1 @author REDUCE COUNT 0 AS count SORTBY 2 @author ASC 
 1) "6"
@@ -538,6 +542,7 @@ GROUP BY author
 ORDER BY author
 ```
 
+Example 4: 
 ```
 > FT.SEARCH idx:quotes "@author:{Charles Dickens} @quote:(dream | love | death)" SUMMARIZE HIGHLIGHT RETURN 2 quote source LIMIT 0 99
 1) "4"
