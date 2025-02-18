@@ -557,48 +557,48 @@ ORDER BY author
 
 Example 4:
 ```
-> FT.AGGREGATE idx:quotes * GROUPBY 1 @source REDUCE COUNT 0 AS count SORTBY 2 @source ASC LIMIT 0 99
+> FT.AGGREGATE idx:quotes * GROUPBY 1 @source REDUCE COUNT 0 AS count SORTBY 2 @count DESC LIMIT 0 99
 1) "71"
 2) 1) "source"
-   2) "A Christmas Carol"
+   2) "Edgar Allan Poe"
    3) "count"
-   4) "5"
+   4) "23"
 3) 1) "source"
-   2) "A Clergyman's Daughter"
+   2) "Nineteen Eighty-Four"
    3) "count"
-   4) "1"
+   4) "19"
 4) 1) "source"
-   2) "A Dream Within a Dream"
-   3) "count"
-   4) "1"
-5) 1) "source"
-   2) "A Tale of Two Cities"
-   3) "count"
-   4) "6"
-6) 1) "source"
-   2) "A Woman of No Importance"
-   3) "count"
-   4) "2"
-7) 1) "source"
-   2) "All Art is Propaganda"
-   3) "count"
-   4) "1"
-8) 1) "source"
-   2) "Alone"
-   3) "count"
-   4) "1"
-9) 1) "source"
    2) "An Autobiography"
    3) "count"
    4) "17"
+5) 1) "source"
+   2) "The Brothers Karamazov"
+   3) "count"
+   4) "14"
+6) 1) "source"
+   2) "Notes from Underground"
+   3) "count"
+   4) "10"
+7) 1) "source"
+   2) "The Picture of Dorian Gray"
+   3) "count"
+   4) "9"
+8) 1) "source"
+   2) "Crime and Punishment"
+   3) "count"
+   4) "9"
+9) 1) "source"
+   2) "The Soul of Man under Socialism"
+   3) "count"
+   4) "7"
 10) 1) "source"
-   2) "An Ideal Husband"
+   2) "Lady Windermere's Fan"
    3) "count"
-   4) "6"
+   4) "7"
 11) 1) "source"
-   2) "Animal Farm"
+   2) "Great Expectations"
    3) "count"
-   4) "5"
+   4) "7"
 . . . 
 ```
 This is equivalent to
@@ -606,7 +606,7 @@ This is equivalent to
 SELECT source, count(*) 
 FROM quotes 
 GROUP BY source
-ORDER BY source
+ORDER BY count(*) DESC
 ```
 
 Example 5: 
