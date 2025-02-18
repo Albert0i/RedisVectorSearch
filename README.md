@@ -537,7 +537,40 @@ GROUP BY author
 ORDER BY author
 ```
 
-That's funny! Is it not? 
+```
+> FT.SEARCH idx:quotes "@author:{Charles Dickens} @quote:(dream | love | death)" SUMMARIZE HIGHLIGHT RETURN 2 quote source LIMIT 0 99
+1) "4"
+2) "quote:98"
+3) 1) "quote"
+   2) "<b>loving</b> heart is the truest wisdom... "
+   3) "source"
+   4) "David Copperfield"
+4) "quote:109"
+5) 1) "quote"
+   2) "this: that a thing constructed can only be <b>loved</b> after it is constructed; but a thing created is <b>loved</b> before it exists... "
+   3) "source"
+   4) "Our Mutual Friend"
+6) "quote:100"
+7) 1) "quote"
+   2) "do great things. We can only do small things with great <b>love</b>.... "
+   3) "source"
+   4) "David Copperfield"
+8) "quote:113"
+9) 1) "quote"
+   2) "is a man who would give his life to keep a life you <b>love</b> beside you... "
+   3) "source"
+   4) "A Tale of Two Cities"
+```
+This is equivalent to
+```
+SELECT quote, source 
+FROM quotes 
+WHERE author = "Charles Dickens" AND 
+      MATCH(quote) AGAINST('dream | love | death' IN BOOLEAN MODE)
+LIMIT 0 99
+```
+
+**It's funny! Is it not? **
 
 > When storing a vector embedding within a JSON document, the embedding is stored as a JSON array. In the example above, the array was shortened considerably for the sake of readability.
 
