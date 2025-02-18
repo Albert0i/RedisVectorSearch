@@ -483,7 +483,8 @@ FT.CREATE idx:quotes ON JSON PREFIX 1 quote:
           DISTANCE_METRIC COSINE
 ```
 
-For now, play around with the index we've just created: 
+---
+For now, let's play with the index just created: 
 ```
 > FT.SEARCH idx:quotes * LIMIT 0 0
 1) "245"
@@ -571,6 +572,7 @@ LIMIT 0 99
 ```
 
 **It's fun! Is it not?**
+---
 
 > When storing a vector embedding within a JSON document, the embedding is stored as a JSON array. In the example above, the array was shortened considerably for the sake of readability.
 
