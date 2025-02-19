@@ -180,6 +180,8 @@ for person in range(1, 41):
    
 ```
 
+In this snippet, we iterate through the number of persons and training faces to build the file system path, then feed the model to the DeepFace library and store the dictionary inclusive of the embedding.
+
 **Calculating the recognition rate**
 
 Similarly to the training phase, we iterate through the rest of the faces, extract the vector embedding from each facial picture, and perform vector search. If the recognition is successful, and the face belongs to the known identity, we increment a counter to calculate a relative rate.
