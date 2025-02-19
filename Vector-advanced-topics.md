@@ -128,7 +128,7 @@ Implementing a visual recommender system using vector search follows the same lo
 
 In this unit, we will revisit the same concepts learned so far, but rather than text, we will work with images and guide you through implementing a face recognition system.
 
-> If you want to run the example first, jump to the activity to learn how to do so.
+> *If you want to run the example first, jump to the activity to learn how to do so.*
 
 **Develop your own face recognition system**
 
