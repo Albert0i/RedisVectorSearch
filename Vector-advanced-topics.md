@@ -532,7 +532,7 @@ Formatting the prompt with the context and the query from the user completes the
 
 **Generation**
 
-In the final phase, which concludes this example, we will forward the prompt to the LLM. We will use an OpenAI endpoint to leverage the GPT-3.5 model [gpt-3.5-turbo-0613(https://platform.openai.com/docs/models/gpt-3-5)], but we may have used the desired model. Whatever the choice, using an LLM-as-a-service is the best way to set up and prepare a demonstration without major efforts, which a local LLM will imply. To go ahead with GPT-3.5, create your OpenAI token and specify it using the environment variable OPENAI_API_KEY.
+In the final phase, which concludes this example, we will forward the prompt to the LLM. We will use an OpenAI endpoint to leverage the GPT-3.5 model [gpt-3.5-turbo-0613](https://platform.openai.com/docs/models/gpt-3-5), but we may have used the desired model. Whatever the choice, using an LLM-as-a-service is the best way to set up and prepare a demonstration without major efforts, which a local LLM will imply. To go ahead with GPT-3.5, create your OpenAI token and specify it using the environment variable OPENAI_API_KEY.
 
 ```
 export OPENAI_API_KEY="1234567890abcdefghijklmnopqrstuvwxyz"
