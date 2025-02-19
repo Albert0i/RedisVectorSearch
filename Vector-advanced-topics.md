@@ -378,7 +378,7 @@ In practical terms, if a semantic cache is in place, whenever a new question is 
 
 Prototyping an ML-powered chatbot is not an impossible mission. The many frameworks and libraries available, together with the simplicity of getting an API token from the chosen LLM service provider, can assist you in setting up a proof-of-concept in a few hours and lines of code. Sticking to the three phases mentioned earlier (preparation, generation, and retrieval), let's proceed to create a chatbot assistant, a **movie expert** you can consult to get recommendations from and ask for specific movies.
 
-> If you want to run the example first, jump to the bottom of this article to learn how to do so.
+> *If you want to run the example first, jump to the bottom of this article to learn how to do so.*
 
 **Preparation**
 
