@@ -91,7 +91,7 @@ Result{5 total, docs: [Document {'id': 'book:15', 'payload': None, '$.title': 'T
 
 **Performing range search**
 
-In this example, we executed a KNN search and retrieved the documents with the closest distance from the document being considered. Alternatively, we can perform a vector search range search to retrieve results having the desired distance from the sample vector embedding. The related code is:
+In this example, we executed a KNN search and retrieved the documents with the closest distance from the document being considered. Alternatively, we can perform a vector search range search to retrieve results having the **desired distance** from the sample vector embedding. The related code is:
 
 ```
 def get_recommendation_by_range(key):
