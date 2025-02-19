@@ -349,7 +349,7 @@ We can simplify the architecture by considering the following three phases:
 
 Current LLM services do not store any conversation history. So, conversations are stateless, which is the same. This means that once a question is asked and the answer generated, we cannot refer to previous passages in the conversation. Keeping the context of the conversation in memory and providing the LLM with the entire conversation (as a list of pairs question + response) together with the new question is the responsibility of the client application.
 
-> Review the body of the OpenAI [chat completion API](https://platform.openai.com/docs/api-reference/chat), which accepts messages: the list of messages comprising the ongoing conversation. However, sending back to the LLM the entire conversation may not be convenient for two main reasons.
+> *Review the body of the OpenAI [chat completion API](https://platform.openai.com/docs/api-reference/chat), which accepts messages: the list of messages comprising the ongoing conversation. However, sending back to the LLM the entire conversation may not be convenient for two main reasons.*
 
 First, we should filter out **irrelevant interactions** from the current conversation when these do not relate to the last question. So, in practice, imagine a conversation about food interrupted by a few questions about coding and then additional questions about the former food context. Storing all the questions and responses and their corresponding vector embeddings in the user's session enables vector search to find those semantically similar interactions to the last question. Using this method, we can pick the relevant portion of the conversation.
 
