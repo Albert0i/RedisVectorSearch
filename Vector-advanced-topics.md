@@ -7,7 +7,7 @@ The idea behind a recommender system using vector search is to transform the rel
 
 Let's consider the following example.
 
-> If you want to run the example first, jump to the bottom of this article to learn how to do so.
+> *If you want to run the example first, jump to the bottom of this article to learn how to do so.*
 
 **Writing a recommender system**
 
