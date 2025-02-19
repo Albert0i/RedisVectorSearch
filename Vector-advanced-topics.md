@@ -412,7 +412,7 @@ Imagine a movie expert who may answer questions or recommend movies based on cri
 
 As mentioned, to enable context retrieval, we will capture the semantics of the data using an embedding model and we will store the embedding vector in the database, which will perform indexing using the desired method (FLAT or HNSW), distance (L2, IP or COSINE) and the required vector dimension. In particular, the index definition depends on the dimension of the vector specified by DIM, which is set by the chosen embedding model. The chosen embedding model we will use along this example is the open-source all-MiniLM-L6-v2 sentence transformer, which converts the provided paragraphs to a 384 dimensional dense vector space.
 
-> Note that embedding models support the conversion of texts up to a certain size. The chosen model warns that "input text longer than 256-word pieces is truncated". This is not an issue for our movie dataset because we expect to convert paragraphs whose length is shorter than the limit. However, a text chunking strategy to map a document to multiple vector embeddings is needed for longer texts or even entire books.
+> *Note that embedding models support the conversion of texts up to a certain size. The chosen model warns that "input text longer than 256-word pieces is truncated". This is not an issue for our movie dataset because we expect to convert paragraphs whose length is shorter than the limit. However, a text chunking strategy to map a document to multiple vector embeddings is needed for longer texts or even entire books.*
 
 Now we can parse the CSV dataset and import it in JSON format into Redis so that we can read a movie entry with:
 
@@ -505,7 +505,7 @@ if (res is not None) and len(res.docs):
 
 The search command performs a vector search range search and filters results exceeding a certain score specified by VSS_MINIMUM_SCORE and collects three samples. In the example, we extract the desired metadata from the results and concatenate it to create a context for the interaction.
 
-In our example, the dataset provides a short overview of the movie and other information, so we can construct the context by concatenating the information in a string. However, the context window supported by LLMs is limited by a maximum number of tokens (learn more from the [OpenAI tokenizer page](https://platform.openai.com/tokenizer)). In addition, the LLM service provider charges you by the overall number of input and output tokens, so limiting the number of tokens provided in the context and instructing the model to return an output limited in size may be convenient.
+*In our example, the dataset provides a short overview of the movie and other information, so we can construct the context by concatenating the information in a string. However, the context window supported by LLMs is limited by a maximum number of tokens (learn more from the [OpenAI tokenizer page](https://platform.openai.com/tokenizer)). In addition, the LLM service provider charges you by the overall number of input and output tokens, so limiting the number of tokens provided in the context and instructing the model to return an output limited in size may be convenient.*
 
 Having retrieved the required information, the prompt you construct should include the knowledge you want the LLM to use for generating responses. It should provide clear instructions for handling user queries and accessing the indexed data. An example might be:
 
