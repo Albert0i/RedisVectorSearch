@@ -25,6 +25,7 @@ The embedding model we will be using in this example proceeds from the [Transfor
 ```
 npm install redis
 npm install @xenova/transformers
+npm install dotenv
 ```
 
 The chosen model is [all-distilroberta-v1](https://huggingface.co/sentence-transformers/all-distilroberta-v1), which maps sentences and paragraphs to a 768-dimensional dense vector space.
