@@ -113,7 +113,7 @@ The contextualized embeddings for all tokens are combined into a single vector r
 The result of the pooling operation is a single fixed-size vector (e.g., 768 dimensions) that captures the overall semantic meaning of the sentence "I like apple":
 - Example Output Vector: [0.2, 0.3, 0.5, 0.4, 0.7, 0.6, ...]
 
-### Summary
+#### Summary
 
 1. **Tokenization**: Split "I like apple" into tokens ["I", "like", "apple"].
 2. **Embedding Lookup**: Convert tokens into dense vectors.
