@@ -213,7 +213,7 @@ for person in range(1, 41):
 print(success/200*100)   
 ```
 
-The default vector search parameters used in the example and the chosen embedding model provide a recognition rate of 99.5%. You can experiment further with different models.
+The default vector search parameters used in the example and the chosen embedding model provide a **recognition rate of 99.5%**. You can experiment further with different models.
 
 **Working with JSON documents**
 
