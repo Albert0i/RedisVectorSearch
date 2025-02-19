@@ -371,7 +371,7 @@ In practical terms, if a semantic cache is in place, whenever a new question is 
 - Use vector database to cache input prompts
 - Cache hits evaluated by semantic similarity
 
-> Note that the [RedisVL](https://github.com/RedisVentures/redisvl) client library makes semantic caching available out-of-the-box.
+> *Note that the [RedisVL](https://github.com/RedisVentures/redisvl) client library makes semantic caching available out-of-the-box.*
 
 
 #### VIII. Setting up a RAG Chatbot
