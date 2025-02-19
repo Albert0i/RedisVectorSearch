@@ -538,7 +538,7 @@ In the final phase, which concludes this example, we will forward the prompt to 
 export OPENAI_API_KEY="1234567890abcdefghijklmnopqrstuvwxyz"
 ```
 
-Using the OpenAI ChatCompletion API is straightforward, refer to the [API documentation](https://platform.openai.com/docs/api-reference/chat) to learn the details. To send the request you will need to specify, besides the chosen model, at least:
+Using the OpenAI [ChatCompletion API](https://platform.openai.com/docs/guides/gpt/chat-completions-api) is straightforward, refer to the [API documentation](https://platform.openai.com/docs/api-reference/chat) to learn the details. To send the request you will need to specify, besides the chosen model, at least:
 
 - **The system message** sets the context and the tone of the conversation. It is typically the first message in the interaction and guides the model's behavior during the conversation. For example, you may specify here that you would like the interaction customized for primary school students. This would tune the tone accordingly and produce responses suitable for youngsters.
 
