@@ -249,7 +249,7 @@ schema = (VectorField("$.embeddings[*]", "HNSW", {"TYPE": "FLOAT32", "DIM": 2622
 r.ft('face_idx').create_index(schema, definition=index_def)
 ```
 
-> Note how the expression $.embeddings[*] selects all the vectors under the field $.embeddings.
+> *Note how the expression $.embeddings[*] selects all the vectors under the field $.embeddings.*
 
 The execution of this example achieves the same recognition rate. You will now have the chance to study the entire notebook and run the examples.
 
