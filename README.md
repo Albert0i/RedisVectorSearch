@@ -1,7 +1,7 @@
 ### Redis [Vector Search](https://redis.io/docs/latest/develop/interact/search-and-query/query/vector-search/)
 
 
-> "So I learned that even after a single day’s experience of the outside world a man could easily live a hundred years in prison." 
+> "So I learned that even after a single day’s experience of the outside world a man could easily live a hundred years in prison. <br />--- The Stranger by Albert Camus" 
 
 
 #### Prologue
